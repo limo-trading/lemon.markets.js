@@ -83,7 +83,7 @@ const order = await client.orders.create({
 
 ### Activate Order
 ```ts
-const result = await order.activate({ pin: '1234' })
+const result = await order.activate({ pin: 1234 })
 ```
 
 ### Account
