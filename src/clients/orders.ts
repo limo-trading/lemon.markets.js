@@ -1,5 +1,6 @@
 import HttpClient from "../http_client";
 import ClientOptions from "./client_options";
+import ResponsePage from "./ReponsePage";
 
 interface ActivatedOrder {
     time: string
@@ -48,6 +49,28 @@ export default class Orders {
                 }, 
                 ...response,
             });
+        })
+    }
+
+    public get(options?: {
+        from?: string
+        to?: string
+        isin?: string
+        side?: 'buy' | 'sell'
+        status?: 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
+    }) {
+        return new Promise<ResponsePage<any>>(async resolve => {
+            const response = await this.http_client.get('/orders', options)
+            resolve({
+                ...response,
+                values: response.results,
+                previous: () => {
+                    if(response.previous) this.http_client.external_fetch(response.previous);
+                },
+                next: () => {
+                    if(response.next) this.http_client.external_fetch(response.next);
+                }
+            })
         })
     }
 }
