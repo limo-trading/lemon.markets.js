@@ -1,13 +1,14 @@
 import HttpClient from '../http_client';
 import ClientOptions from './client_options';
+import ResponsePage from './ReponsePage';
 
 interface Request {
-    isin: string
-    limit: number
-    page: number
+    isin?: string
+    limit?: number
+    page?: number
 }
 
-interface Response{
+interface Response {
     isin: string
     isin_title: string
     quantity: bigint
@@ -25,14 +26,21 @@ export default class Positions {
     }
 
     public get(options?:Request) {
-        return new Promise<Response>(async (resolve, reject) => {
-            const response = await this.http_client.get('/positions', { body: options });
-            if(response.status === 200) {
-                const data = await response.json();
-                resolve(data);
-            } else {
-                reject(new Error(`${response.status} ${response.statusText}`));
-            }
+        return new Promise<ResponsePage<Response>>(async resolve => {
+            const response = await this.http_client.get('/positions', { 'isin': options?.isin, 'limit': options?.limit, 'page': options?.page });
+            resolve({
+                mode: response.mode,
+                page: response.page,
+                pages: response.pages,
+                total: response.total,
+                previous: () => {
+                    if(response.previous) this.http_client.external_fetch(response.previous);
+                },
+                next: () => {
+                    if(response.next) this.http_client.external_fetch(response.next);
+                },
+                values: response.results,
+            });
         })
     }
 }
