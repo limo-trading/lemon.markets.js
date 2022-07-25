@@ -1,5 +1,6 @@
 import HttpClient from "../http_client";
 import ClientOptions from "./client_options";
+import Withdrawals from "./withdrawals";
 
 interface AccountResponse {
     account_id: string
@@ -21,8 +22,11 @@ export default class Account {
 
     private http_client: HttpClient;
 
+    public withdrawals: Withdrawals;
+
     constructor(options: ClientOptions) {
         this.http_client = options.http_client;
+        this.withdrawals = new Withdrawals(options);
     }
 
     public async get() {
@@ -31,4 +35,7 @@ export default class Account {
             resolve(response.results);
         });
     }
+
+    // TODO: GET /account/bankstatements
+    // TODO: GET /account/documents
 }
