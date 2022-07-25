@@ -23,7 +23,7 @@ export default class HttpClient {
         this.auth_token = auth_token;
     }
 
-    private async construct_fetch(url: string, method: 'GET' | 'POST', options: { headers?: HeadersInit, body?: string | object, query?: {[key: string]: string | number | undefined} }) {
+    private async construct_fetch(url: string, method: 'GET' | 'POST' | 'DELETE', options: { headers?: HeadersInit, body?: string | object, query?: {[key: string]: string | number | undefined} }) {
 
         // check rate limit
         if(this.rate_remaining === 0) {
@@ -69,6 +69,10 @@ export default class HttpClient {
 
     public post(path: string, options: {}) {
         return this.construct_fetch(`${this.url}${path}`, 'POST', options);
+    }
+
+    public delete(path: string, options: {}) {
+        return this.construct_fetch(`${this.url}${path}`, 'DELETE', options);
     }
 
     public external_fetch(url: string, options?: {}) {
