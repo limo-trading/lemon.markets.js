@@ -63,16 +63,16 @@ export default class HttpClient {
         return await data;
     }
     
-    public get(path: string, query?: {[key: string]: string | number | undefined}) {
-        return this.construct_fetch(`${this.url}${path}`, 'GET', { query });
+    public get(path: string, options?: {}) {
+        return this.construct_fetch(`${this.url}${path}`, 'GET', options!);
     }
 
-    public post(path: string, options: {}) {
-        return this.construct_fetch(`${this.url}${path}`, 'POST', options);
+    public post(path: string, options?: {}) {
+        return this.construct_fetch(`${this.url}${path}`, 'POST', options!);
     }
 
-    public delete(path: string, options: {}) {
-        return this.construct_fetch(`${this.url}${path}`, 'DELETE', options);
+    public delete(path: string, options?: {}) {
+        return this.construct_fetch(`${this.url}${path}`, 'DELETE', options!);
     }
 
     public external_fetch(url: string, options?: {}) {
