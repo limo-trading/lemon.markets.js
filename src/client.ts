@@ -3,6 +3,7 @@ import HttpClient from './http_client';
 import Positions from './clients/positions';
 import Quotes from './clients/quotes/quotes';
 import Orders from './clients/orders';
+import Account from './clients/account';
 
 type trading_mode = 'paper' | 'live';
 
@@ -21,6 +22,7 @@ export default class Client {
     public positions: Positions;
     public quotes: Quotes;
     public orders: Orders;
+    public account: Account;
 
     constructor(options:GeneralClientOptions) {
 
@@ -36,6 +38,7 @@ export default class Client {
 
         this.positions = new Positions({ http_client: trading_http_client });
         this.orders = new Orders({ http_client: trading_http_client });
+        this.account = new Account({ http_client: trading_http_client });
 
         this.quotes = new Quotes({ http_client: data_http_client });
     }
