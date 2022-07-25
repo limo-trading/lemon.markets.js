@@ -55,6 +55,13 @@ const result = await order.activate({ pin: '1234' })
 const account = await client.account.get()
 ```
 
+### Orders
+Get all orders
+```ts
+const page = await client.orders.get()
+const orders = page.values
+```
+
 ## Market Data
 
 ### Latest
