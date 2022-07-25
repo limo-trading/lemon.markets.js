@@ -19,8 +19,15 @@
   },
   "homepage": "https://github.com/limo-trading/lemon.markets.js#readme",
   "devDependencies": {
+    "@types/node-fetch": "^2.6.2",
     "tslint": "^6.1.3",
     "typescript": "^4.7.4"
   },
-  "files": ["lib/**/*"]
+  "files": [
+    "lib/**/*"
+  ],
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "ts-dotenv": "^0.8.3"
+  }
 }
