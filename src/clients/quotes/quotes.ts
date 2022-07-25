@@ -1,6 +1,6 @@
 import HttpClient from "../../http_client";
 import ClientOptions from "../client_options";
-import ResponsePage from "../ReponsePage";
+import ResponsePage from "../response_page";
 
 interface LatestResponse {
     isin: string
@@ -22,9 +22,8 @@ export default class Quotes {
 
     public async latest(options: { isin: string, mic?: string }) {
         return new Promise<ResponsePage<LatestResponse>>(async resolve => {
-            const response = await this.http_client.get('/quotes/latest', { 'isin': options.isin, 'mic': options.mic });
+            const response = await this.http_client.get('/quotes/latest', { query: options });
             resolve({
-                mode: response.mode,
                 page: response.page,
                 pages: response.pages,
                 total: response.total,
