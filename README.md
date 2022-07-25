@@ -73,7 +73,7 @@ Allowed Params:
 ### Create Order
 ```ts
 const order = await client.orders.create({
-    isin: US88160R1014,
+    isin: 'US88160R1014',
     quantity: 1,
     expires_at: 'day',
     side: 'buy',
