@@ -1,4 +1,4 @@
-export default interface ReponsePage<T> {
+export default interface ResponsePage<T> {
     page: number
     pages: number
     total: number
