@@ -2,7 +2,7 @@
 
 ### Completeness
 
-`⚠ NOTE: Completed routes can change to unfinished-state again. depends on the current develepment goals` <br/>
+`⚠ NOTE: Completed routes can change to unfinished-state again. depends on the current development goals` <br/>
 
 ✅ Completed <br/>
 ❌ Not completed <br/>
