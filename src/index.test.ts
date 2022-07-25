@@ -13,8 +13,22 @@ const client = new lemon.Client({
 async function main(action: string) {
     switch(action) {
         case 'positions': displayPositions(); break;
-        case 'orders': order(); break;
+        case 'order': order(); break;
+        case 'account': displayAccount(); break;
+        case 'orders': displayOrders(); break;
     }
+}
+
+async function displayOrders() {
+    const orders = await client.orders.get();
+    orders.values.forEach(order => {
+        console.log(order);
+    })
+}
+
+async function displayAccount() {
+    const account = await client.account.get();
+    console.log(account);
 }
 
 async function order() {
@@ -39,4 +53,4 @@ async function displayPositions() {
     })
 }
 
-main('positions');
+main('orders');
