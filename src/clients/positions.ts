@@ -1,14 +1,14 @@
 import HttpClient from '../http_client';
 import ClientOptions from './client_options';
-import ResponsePage from './ReponsePage';
+import ResponsePage from './response_page';
 
-interface Request {
+interface PositionsGetRequest {
     isin?: string
     limit?: number
     page?: number
 }
 
-interface Response {
+interface PositionsGetResponse {
     isin: string
     isin_title: string
     quantity: number
@@ -25,11 +25,10 @@ export default class Positions {
         this.http_client = options.http_client;
     }
 
-    public get(options?:Request) {
-        return new Promise<ResponsePage<Response>>(async resolve => {
-            const response = await this.http_client.get('/positions', { 'isin': options?.isin, 'limit': options?.limit, 'page': options?.page });
+    public get(options?:PositionsGetRequest) {
+        return new Promise<ResponsePage<PositionsGetResponse>>(async resolve => {
+            const response = await this.http_client.get('/positions', { query: options });
             resolve({
-                mode: response.mode,
                 page: response.page,
                 pages: response.pages,
                 total: response.total,
@@ -43,4 +42,7 @@ export default class Positions {
             });
         })
     }
+
+    // TODO: GET /positions/statements
+    // TODO: GET /positions/performance
 }
