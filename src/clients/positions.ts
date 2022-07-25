@@ -11,10 +11,10 @@ interface Request {
 interface Response {
     isin: string
     isin_title: string
-    quantity: bigint
-    buy_price_avg: bigint
-    estimated_price_total: bigint
-    estimated_price: bigint
+    quantity: number
+    buy_price_avg: number
+    estimated_price_total: number
+    estimated_price: number
 }
 
 export default class Positions {
