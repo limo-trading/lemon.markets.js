@@ -78,3 +78,14 @@ Allowed Params:
 | mic | string | Use the Market Identifier Code to filter for a specific Trading Venue. Currently, only <b>XMUN</b> is supported. |
 
 <span color='red'>* required</span>
+
+<br/>
+
+every route in extra file. makes cache layer possible. ->
+```js
+client.example.get()    // fetches ressource
+client.example.cache()  // cached ressource
+client.example.create() // posts request
+client.example.delete() // delete request
+client.example.cancel() // delete request
+```
