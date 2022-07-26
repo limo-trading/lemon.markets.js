@@ -7,6 +7,7 @@ import Account from './clients/account';
 import Instruments from './clients/instruments';
 import Venues from './clients/venues';
 import Trades from './clients/trades';
+import Realtime from './clients/realtime';
 
 type trading_mode = 'paper' | 'live';
 
@@ -29,6 +30,7 @@ export default class LemonClient {
     public instruments: Instruments;
     public venues: Venues;
     public trades: Trades;
+    public realtime: Realtime;
 
     constructor(options:GeneralClientOptions) {
 
@@ -41,6 +43,7 @@ export default class LemonClient {
 
         const trading_http_client = new HttpClient(`https://${this.mode === 'paper' ? 'paper-' : ''}trading.lemon.markets/v1`, this.trading_key);
         const data_http_client = new HttpClient(`https://data.lemon.markets/v1`, this.data_key);
+        const realtime_http_client = new HttpClient(`https://realtime.lemon.markets/v1`, this.data_key);
 
         this.positions = new Positions({ http_client: trading_http_client });
         this.orders = new Orders({ http_client: trading_http_client });
@@ -50,5 +53,7 @@ export default class LemonClient {
         this.instruments = new Instruments({ http_client: data_http_client });
         this.venues = new Venues({ http_client: data_http_client });
         this.trades = new Trades({ http_client: data_http_client });
+
+        this.realtime = new Realtime({ http_client: realtime_http_client });
     }
 }
