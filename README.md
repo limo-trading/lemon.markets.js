@@ -19,18 +19,18 @@
 | GET | /account | ✅ | ❌ | ❌ |
 | POST | /account/withdrawals | ✅ | ❌ | ❌ |
 | GET | /account/withdrawals | ✅ | ❌ | ❌ |
-| GET | /account/bankstatements | ❌ | ❌ | ❌ |
-| GET | /account/documents | ❌ | ❌ | ❌ |
+| GET | /account/bankstatements | ✅ | ❌ | ❌ |
+| GET | /account/documents | ✅ | ❌ | ❌ |
 | <b>Orders</b> | | | | |
 | POST | /orders | ✅ | ❌ | ❌ |
-| POST | /orders/{order_id}/activate | ➖ | ❌ | ❌ |
+| POST | /orders/{order_id}/activate | ✅ | ❌ | ❌ |
 | GET | /orders | ✅ | ❌ | ❌ |
 | GET | /orders/{order_id} | ✅ | ❌ | ❌ |
 | DELETE | /orders/{order_id} | ✅ | ❌ | ❌ |
 | <b>Positions</b> | | |
 | GET | /positions | ✅ | ❌ | ❌ |
-| GET | /positions/statements | ❌ | ❌ | ❌ |
-| GET | /positions/performance | ❌ | ❌ | ❌ |
+| GET | /positions/statements | ✅ | ❌ | ❌ |
+| GET | /positions/performance | ✅ | ❌ | ❌ |
 | <b>Market data</b> | | | | |
 | GET | /instruments | ❌ | ❌ | ❌ |
 | GET | /venues | ❌ | ❌ | ❌ |
