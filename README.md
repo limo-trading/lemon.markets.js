@@ -16,24 +16,24 @@
 | method | path | covered | cache | documentation |  
 | - | - | - | - | - | 
 | <b>Account</b> | | | | |
-| GET | /account | ✅ | ❌ | ❌ |
+| GET | /account | ✅ | ✅ | ❌ |
 | POST | /account/withdrawals | ✅ | ➖ | ❌ |
-| GET | /account/withdrawals | ✅ | ❌ | ❌ |
-| GET | /account/bankstatements | ✅ | ❌ | ❌ |
-| GET | /account/documents | ✅ | ❌ | ❌ |
+| GET | /account/withdrawals | ✅ | ✅ | ❌ |
+| GET | /account/bankstatements | ✅ | ✅ | ❌ |
+| GET | /account/documents | ✅ | ✅ | ❌ |
 | <b>Orders</b> | | | | |
 | POST | /orders | ✅ | ➖ | ❌ |
 | POST | /orders/{order_id}/activate | ✅ | ➖ | ❌ |
-| GET | /orders | ✅ | ❌ | ❌ |
-| GET | /orders/{order_id} | ✅ | ❌ | ❌ |
+| GET | /orders | ✅ | ✅ | ❌ |
+| GET | /orders/{order_id} | ✅ | ✅ | ❌ |
 | DELETE | /orders/{order_id} | ✅ | ➖ | ❌ |
 | <b>Positions</b> | | |
-| GET | /positions | ✅ | ❌ | ❌ |
-| GET | /positions/statements | ✅ | ❌ | ❌ |
-| GET | /positions/performance | ✅ | ❌ | ❌ |
+| GET | /positions | ✅ | ✅ | ❌ |
+| GET | /positions/statements | ✅ | ✅ | ❌ |
+| GET | /positions/performance | ✅ | ✅ | ❌ |
 | <b>Market data</b> | | | | |
-| GET | /instruments | ✅ | ❌ | ❌ |
-| GET | /venues | ✅ | ❌ | ❌ |
+| GET | /instruments | ✅ | ✅ | ❌ |
+| GET | /venues | ✅ | ✅ | ❌ |
 | GET | /quotes/latest | ✅ | ➖ | ❌ |
 | GET | /ohlc/{x1} | ❌ | ❌ | ❌ |
 | GET | /trades/latest | ✅ | ➖ | ❌ |
