@@ -1,10 +1,11 @@
 import Client, { ClientOptions } from "../client";
 import * as Ably from 'ably';
 import Cache from '../cache';
+import { LatestQuote } from "../@types/trades";
 
 interface RealtimeSubscribeRequest {
     isin: string | string[];
-    callback: (data: RealtimeResponse) => void;
+    callback: (data: LatestQuote) => void;
 }
 
 interface RealtimeAuthResponse {
@@ -13,17 +14,7 @@ interface RealtimeAuthResponse {
     user_id: string
 }
 
-interface RealtimeResponse {
-    isin: string
-    b_v: number
-    a_v: number
-    b: number
-    a: number
-    t: string
-    mic: string
-}
-
-export default class Realtime extends Client<RealtimeResponse> {
+export default class Realtime extends Client<LatestQuote> {
 
     private auth_cache: Cache<RealtimeAuthResponse>;
     private connection_cache: Cache<Ably.Realtime>;
@@ -41,7 +32,7 @@ export default class Realtime extends Client<RealtimeResponse> {
 
     private auth() {
         return new Promise<RealtimeAuthResponse>(async resolve => {
-            const response = await this.http_client.get('/auth');
+            const response = await this.http_client.post('/auth');
             this.cache_layer.set('auth', response);
             resolve(response);
         })
@@ -56,7 +47,11 @@ export default class Realtime extends Client<RealtimeResponse> {
 
             const connection = this.connection_cache.getDefault() || new Ably.Realtime({
                 token: auth.token,
-                transportParams: { remainPresentFor: 1000 }
+                transportParams: { remainPresentFor: 1000 },
+                authCallback: async(_, callback) => {
+                    const auth = await this.auth();
+                    callback('', auth.token);
+                }
             })
 
             const quotes = this.quotes_cache.getDefault() || connection.channels.get(auth.user_id);
