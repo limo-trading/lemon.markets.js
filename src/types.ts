@@ -88,3 +88,12 @@ export interface OrderConfirmation {
     charge: number
     activate: (options: { pin: number }) => Promise<boolean>
 }
+
+export interface Position {
+    isin: string
+    isin_title: string
+    quantity: number
+    buy_price_avg: number
+    estimated_price_total: number
+    estimated_price: number
+}
