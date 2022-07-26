@@ -30,7 +30,7 @@ export default class Performance extends Client {
     }
     public async get(options?: PerformanceGetRequest) {
         return new Promise<ResponsePage<PerformanceGetResponse>>(async resolve => {
-            const response = await this.http_client.get('/performance', { query: options });
+            const response = await this.http_client.get('/positions/performance', { query: options });
             resolve(toResponsePage(response, this.http_client));
         });
     }

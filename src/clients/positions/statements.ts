@@ -29,7 +29,7 @@ export default class Statements extends Client {
 
     public get(options?: StatementGetRequest) {
         return new Promise<ResponsePage<StatementGetResponse>>(async resolve => {
-            const res = await this.http_client.get(`/statements`, { query: options })
+            const res = await this.http_client.get(`/positions/statements`, { query: options })
             resolve(toResponsePage(res, this.http_client))
         })
     }
