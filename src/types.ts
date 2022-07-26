@@ -97,3 +97,14 @@ export interface Position {
     estimated_price_total: number
     estimated_price: number
 }
+
+export type InstrumentType = 'stock' | 'etf'
+
+export interface Instrument {
+    isin: string;
+    wkn: string;
+    name: string;
+    title: string;
+    symbol: string;
+    type: InstrumentType;
+}

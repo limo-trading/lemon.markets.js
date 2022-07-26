@@ -1,7 +1,6 @@
 import Client, { ClientOptions } from "../client";
 import ResponsePage, { PageBuilder } from "../response_page";
-
-type InstrumentType = 'stock' | 'etf'
+import { Instrument, InstrumentType } from "../types";
 
 interface InstrumentsGetRequest {
     isin?: string | string[10];
@@ -9,25 +8,16 @@ interface InstrumentsGetRequest {
     type?: InstrumentType;
 }
 
-interface InstrumentsGetResponse {
-    isin: string;
-    wkn: string;
-    name: string;
-    title: string;
-    symbol: string;
-    type: InstrumentType;
-}
-
-export default class Instruments extends Client<InstrumentsGetResponse> {
+export default class InstrumentsClient extends Client<Instrument> {
 
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public get(options: InstrumentsGetRequest) {
-        return new Promise<ResponsePage<InstrumentsGetResponse>>(async resolve => {
+        return new Promise<ResponsePage<Instrument>>(async resolve => {
             const response = await this.httpClient.get('/instruments', { query: options });
-            resolve(new PageBuilder<InstrumentsGetResponse>(this.httpClient, this.cacheLayer).build(response));
+            resolve(new PageBuilder<Instrument>(this.httpClient, this.cacheLayer).build(response));
         })
     }
 
