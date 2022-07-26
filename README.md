@@ -39,7 +39,7 @@
 | GET | /trades/latest | ✅ | ➖ | ❌ |
 | <b>Realtime</b> | | | | |
 | POST | /auth | ✅ | ➖ | ❌ |
-| - | ably_sdk | ❌ |  ➖ | ❌ |
+| - | ably_sdk | ✅ |  ➖ | ❌ |
 
 ## Getting started
 
