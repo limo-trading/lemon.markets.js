@@ -1,4 +1,5 @@
 import Client, { ClientOptions } from './client';
+import Statements from './positions/statements';
 import ResponsePage, { toResponsePage } from './response_page';
 
 interface PositionsGetRequest {
@@ -18,8 +19,11 @@ interface PositionsGetResponse {
 
 export default class Positions extends Client {
 
+    public statements: Statements;
+
     constructor(options: ClientOptions) {
         super(options);
+        this.statements = new Statements(options);
     }
 
     public get(options?:PositionsGetRequest) {
@@ -29,6 +33,5 @@ export default class Positions extends Client {
         })
     }
 
-    // TODO: GET /positions/statements
     // TODO: GET /positions/performance
 }
