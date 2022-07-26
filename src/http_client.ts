@@ -9,6 +9,17 @@ function awaitNewRateLimit(time: number) {
     });
 }
 
+type FetchMethods = 'GET' | 'POST' | 'DELETE'
+
+type FetchOptions = {
+    headers?: HeadersInit,
+    body?: string | object,
+    query?: {
+        [key: string]: string | number | undefined
+    }
+    path?: string
+}
+
 export default class HttpClient {
 
     private url: string;
@@ -23,7 +34,7 @@ export default class HttpClient {
         this.auth_token = auth_token;
     }
 
-    private async construct_fetch(url: string, method: 'GET' | 'POST' | 'DELETE', options: { headers?: HeadersInit, body?: string | object, query?: {[key: string]: string | number | undefined} }) {
+    private async construct_fetch(url: string, method: FetchMethods, options: FetchOptions) {
 
         // check rate limit
         if(this.rate_remaining === 0) {
@@ -45,7 +56,7 @@ export default class HttpClient {
         // construct query string
         const query: string = options.query ? `?${Object.keys(options.query).map(key => options.query![key] ? `${key}=${options.query![key]}`: '').join('&')}` : '';
 
-        const res = await fetch(`${url}${query}`, {
+        const res = await fetch(`${url}${options.path ? '/' + options.path : ''}${query}`, {
             method,
             headers,
             body: method === 'POST' ? body : undefined
