@@ -4,6 +4,7 @@ import Positions from './clients/positions';
 import Quotes from './clients/quotes/quotes';
 import Orders from './clients/orders';
 import Account from './clients/account';
+import Instruments from './clients/instruments';
 
 type trading_mode = 'paper' | 'live';
 
@@ -23,6 +24,7 @@ export default class LemonClient {
     public quotes: Quotes;
     public orders: Orders;
     public account: Account;
+    public instruments: Instruments;
 
     constructor(options:GeneralClientOptions) {
 
@@ -41,5 +43,6 @@ export default class LemonClient {
         this.account = new Account({ http_client: trading_http_client });
 
         this.quotes = new Quotes({ http_client: data_http_client });
+        this.instruments = new Instruments({ http_client: data_http_client });
     }
 }
