@@ -1,5 +1,5 @@
-import Client, { ClientOptions } from "../../client";
-import ResponsePage, {PageBuilder } from "../../response_page";
+import Client, { ClientOptions } from "../client";
+import ResponsePage, {PageBuilder } from "../response_page";
 
 interface LatestResponse {
     isin: string
