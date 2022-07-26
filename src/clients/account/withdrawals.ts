@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from "../client";
-import ResponsePage from "../response_page";
+import ResponsePage, { toResponsePage } from "../response_page";
 
 interface WithdrawalsCreateRequest {
     amount: bigint
@@ -29,7 +29,7 @@ export default class Withdrawals extends Client {
     public async get(options?: WithdrawalsGetRequest) {
         return new Promise<ResponsePage<WithdrawalsGetResponse>>(async resolve => {
             const response = await this.http_client.get("/withdrawals", { query: options });
-            resolve(response.results);
+            resolve(toResponsePage(response, this.http_client));
         });
     }
 

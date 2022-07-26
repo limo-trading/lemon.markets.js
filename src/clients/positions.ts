@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from './client';
-import ResponsePage from './response_page';
+import ResponsePage, { toResponsePage } from './response_page';
 
 interface PositionsGetRequest {
     isin?: string
@@ -25,18 +25,7 @@ export default class Positions extends Client {
     public get(options?:PositionsGetRequest) {
         return new Promise<ResponsePage<PositionsGetResponse>>(async resolve => {
             const response = await this.http_client.get('/positions', { query: options });
-            resolve({
-                page: response.page,
-                pages: response.pages,
-                total: response.total,
-                previous: () => {
-                    if(response.previous) this.http_client.external_fetch(response.previous);
-                },
-                next: () => {
-                    if(response.next) this.http_client.external_fetch(response.next);
-                },
-                values: response.results,
-            });
+            resolve(toResponsePage(response, this.http_client));
         })
     }
 

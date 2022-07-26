@@ -1,6 +1,6 @@
 import HttpClient from "../http_client";
 import Client, { ClientOptions } from "./client";
-import ResponsePage from "./response_page";
+import ResponsePage, { toResponsePage } from "./response_page";
 
 type OrderStatus = 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
 
@@ -99,16 +99,8 @@ export default class Orders extends Client {
                 activate: order.status === 'inactive' ? (options: ActivateRequest) => activateFunction(options, order.id, this.http_client) : undefined,
                 ...order,
             }))
-            resolve({
-                ...response,
-                values: orders,
-                previous: () => {
-                    if(response.previous) this.http_client.external_fetch(response.previous);
-                },
-                next: () => {
-                    if(response.next) this.http_client.external_fetch(response.next);
-                }
-            })
+            response.results = orders;
+            resolve(toResponsePage(response, this.http_client))
         })
     }
 
@@ -118,7 +110,4 @@ export default class Orders extends Client {
             resolve(response.status === 'ok')
         })
     }
-
-    // TODO: GET /orders/{order_id}
-    // TODO: DELETE /orders/{order_id}
 }
