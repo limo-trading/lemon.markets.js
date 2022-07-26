@@ -39,7 +39,6 @@
 | <b>Realtime</b> | | | | |
 | POST | /auth | ✅ | ➖ | ❌ | ❌ |
 | - | ably_sdk | ✅ |  ➖ | ❌ | ❌ |
-[test](#Coverage)
 
 ## Getting started
 
