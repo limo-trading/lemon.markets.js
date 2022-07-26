@@ -22,75 +22,162 @@ const client = new lemon.Client({
 })
 ```
 
+* [Trading](#Trading)
+    * [Account](#Account)
+        * [Withdrawal](#Withdrawal)
+        * [Bankstatement](#BankStatement)
+
+
+# Documentation
+
+## ResponsePage
+If your requested data is too large, it is split across multiple pages.
+
+| Name | Type | Description |
+| - | - | - |
+| page | number | |
+| pages | number | |
+| total | number | |
+| previous | () => Promise\<ResponsePage\<T\>\> | |
+| next | () => Promise\<ResponsePage\<T\>\> | |
+| values | T[] | |
+
 ## Trading
-### Positions
-Get all positions
-```ts
-const page = await client.positions.get()
-const positions = page.values
-```
-
-Allowed Params:
-| Key | Type | Description |
-| - | - | - |
-| isin | string | Use this parameter to filter for a specific Instrument in your positions using the instrument's ISIN |
-| limit | int | This parameter is required to influence the Pagination. Use it to define the limit of displayed results on one page. The default value is 10, the maximum number is 100. |
-| page | int | This parameter is required to influence the Pagination. Use it to define the specific results page you wish to display.|
-
-<span color='red'>* required</span>
-
-### Create Order
-```ts
-const order = await client.orders.create({
-    isin: 'US88160R1014',
-    quantity: 1,
-    expires_at: 'day',
-    side: 'buy',
-    venue: 'allday'
-})
-```
-
-### Activate Order
-```ts
-const result = await order.activate({ pin: 1234 })
-```
-
 ### Account
-```ts
-const account = await client.account.get()
-```
 
-### Orders
-Get all orders
-```ts
-const page = await client.orders.get()
-const orders = page.values
-```
-
-## Market Data
-
-### Latest
-Get latest data
-```ts
-const page = await client.quotes.latest({ 'isin': 'US88160R1014' })
-const latest = page.values[0]
-```
-
-Allowed Params:
-| Key | Type | Description |
+| Name | Type | Description |
 | - | - | - |
-| isin<span color='red'>*</span> | string \| string[] | Use the International Securities Identification Number to filter for a specific instrument you want to get the quotes for. Maximum 10 ISINs per request. |
-| mic | string | Use the Market Identifier Code to filter for a specific Trading Venue. Currently, only <b>XMUN</b> is supported. |
+| account_id | string | |
+| firstname | string | |
+| lastname | string | |
+| iban_brokerage | string | |
+| iban_origin | string | |
+| balance | number | |
+| cash_to_invest | number | |
+| cash_to_withdraw | number | |
+| amount_bought_intraday | number | |
+| amount_sold_intraday | number | |
+| amount_open_orders | number | |
+| amount_open_withdrawals | number | |
+| amount_estimate_taxes | number | |
 
-<span color='red'>* required</span>
+---
 
-<br/>
+Get
+```ts
+const account: Account = await client.account.get()
+```
 
-every route in extra file. makes cache layer possible. ->
-```js
-client.example.get()    // fetches ressource
-client.example.cache()  // cached ressource
-client.example.create() // posts request
-client.example.delete() // delete request
-client.example.cancel() // delete request
+---
+
+Cache
+```ts
+const account: Account = client.account.cache()
+```
+
+### Withdrawal
+
+| Name | Type | Description |
+| - | - | - |
+| id | string | |
+| amount | string | |
+| created_at | string | |
+| idempotency | string | |
+
+---
+Get
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| limit? | number | |
+| page? | number | |
+
+```ts
+const response: ResponsePage<Withdrawal> = await client.account.withdrawals.get()
+const withdrawals: Withdrawal[] = response.values
+```
+
+---
+
+Cache
+```ts
+const withdrawals: Withdrawal[] = client.account.withdrawals.cache()
+```
+
+---
+
+Create
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| amount | number | |
+| pin | number | |
+| idempotency? | string |
+
+```ts
+const result: boolean = await client.account.withdrawals.create({ amount: 10, pin: 10 })
+```
+
+### BankStatement
+
+| Name | Type | Description |
+| - | - | - |
+| id | string | |
+| account_id | string | |
+| type | 'pay_in' \| 'pay_out' \| 'order_buy' \| 'order_sell' \| 'eod_balance' \| 'dividend' \| 'tax_refunded' | |
+| date | string | |
+| amount | number | |
+| isin | string | |
+| isin_title | string | |
+| created_at | string | |
+
+---
+
+Get
+| Name | Type | Description |
+| - | - | - |
+| type? | 'pay_in' \| 'pay_out' \| 'order_buy' \| 'order_sell' \| 'eod_balance' \| 'dividend' \| 'tax_refunded' | |
+| from? | string | |
+| to? | string | |
+| sorting? | 'asc' \| 'desc' | |
+| limit? | number | |
+| page? | number | |
+
+```ts
+const page: ResponsePage<BankStatement> = await client.account.bankstatements.get()
+const bankstatements: BankStatement[] = page.values
+```
+
+---
+
+Cache
+```ts
+const bankstatements: BankStatement[] = client.account.bankstatements.cache()
+```
+
+### Document
+
+| Name | Type | Description |
+| - | - | - |
+| id | string | |
+| name | string | |
+| created_at | string | |
+| category | string | |
+| link | string | |
+| viewed_first_at | string | |
+| viewed_last_at | string | |
+
+---
+
+Get
+```ts
+const page: ResponsePage<Document> = await client.account.documents.get()
+cosnt documents: Document[] = page.values
+```
+
+---
+
+Cache
+```ts
+const documents: Document[] = client.account.documents.cache()
 ```
