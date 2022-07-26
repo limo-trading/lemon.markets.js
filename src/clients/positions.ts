@@ -25,7 +25,7 @@ export default class PositionsClient extends Client<Position> {
     public get(options?:PositionsGetRequest) {
         return new Promise<ResponsePage<Position>>(async resolve => {
             const response = await this.httpClient.get('/positions', { query: options });
-            resolve(new PageBuilder<Position>(this.httpClient, this.cacheLayer).build(response));
+            resolve(new PageBuilder<Position>(this.httpClient, this.cacheLayer).build(response, 'isin'));
         })
     }
 
