@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../client";
 import Withdrawals from "./account/withdrawals";
 import BankStatements from "./account/bankstatements";
-import { Documents } from "./account/documents";
+import Documents from "./account/documents";
 import { Account } from "../types";
 
 export default class AccountClient extends Client<Account> {
