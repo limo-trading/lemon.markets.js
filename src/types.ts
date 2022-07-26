@@ -115,3 +115,11 @@ export interface Venue {
     mic: string
     is_open: boolean
 }
+
+export interface Trade {
+    isin: string
+    p: number
+    v: number
+    t: string
+    mic: string
+}

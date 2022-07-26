@@ -1,21 +1,13 @@
 import Client, { ClientOptions } from "../client";
 import ResponsePage, { PageBuilder } from "../response_page";
+import { Trade } from "../types";
 
 interface TradesGetRequest {
-    isin: string | string[10]
+    isin: string | string[]
     mic: string
     decimals: boolean
     epoch: boolean
 }
-
-interface TradesGetResponse {
-    isin: string
-    p: number
-    v: number
-    t: string
-    mic: string
-}
-
 export default class Trades extends Client<void> {
 
     constructor(options: ClientOptions) {
@@ -23,9 +15,10 @@ export default class Trades extends Client<void> {
     }
 
     public latest(options: TradesGetRequest) {
-        return new Promise<ResponsePage<TradesGetResponse>>(async resolve => {
+        return new Promise<ResponsePage<Trade>>(async resolve => {
+            if(typeof options.isin !== 'string') options.isin = options.isin.join(',');
             const response = await this.httpClient.get('/trades/latest', { query: options });
-            resolve(new PageBuilder<TradesGetResponse>(this.httpClient).build(response.results));
+            resolve(new PageBuilder<Trade>(this.httpClient).build(response.results));
         })
     }
 }
