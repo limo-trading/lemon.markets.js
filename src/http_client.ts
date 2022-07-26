@@ -17,7 +17,6 @@ type FetchOptions = {
     query?: {
         [key: string]: string | number | undefined
     }
-    path?: string
 }
 
 export default class HttpClient {
@@ -47,16 +46,16 @@ export default class HttpClient {
         const headers: HeadersInit = {
             'Authorization': `Bearer ${this.auth_token}`,
             'Content-Type': 'application/json',
-            ...(options.headers || {})
+            ...(options?.headers || {})
         };
 
         // convert body to string if it is an object or leave it as is if it is a string
-        const body: BodyInit = options.body ? typeof options.body === 'string' ? options.body : JSON.stringify(options.body) : '';
+        const body: BodyInit = options?.body ? typeof options.body === 'string' ? options.body : JSON.stringify(options.body) : '';
 
         // construct query string
-        const query: string = options.query ? `?${Object.keys(options.query).map(key => options.query![key] ? `${key}=${options.query![key]}`: '').join('&')}` : '';
+        const query: string = options?.query ? `?${Object.keys(options.query).map(key => options.query![key] ? `${key}=${options.query![key]}`: '').join('&')}` : '';
 
-        const res = await fetch(`${url}${options.path ? '/' + options.path : ''}${query}`, {
+        const res = await fetch(`${url}${query}`, {
             method,
             headers,
             body: method === 'POST' ? body : undefined
