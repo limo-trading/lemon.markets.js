@@ -13,7 +13,7 @@ interface GeneralClientOptions {
     data_key?: string;
 }
 
-export default class Client {
+export default class LemonClient {
 
     private mode:trading_mode;
     private trading_key:string;
