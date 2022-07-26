@@ -135,3 +135,7 @@ export interface OHLC {
     t: string
     mic: string
 }
+
+export interface RealtimeSubscription {
+    close: () => void
+}
