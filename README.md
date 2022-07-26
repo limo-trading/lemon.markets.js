@@ -17,10 +17,10 @@
 | - | - | - | - | - | - |
 | <b>Account</b> | | | | | |
 | GET | /account | ✅ | ✅ | ❌ | ✅ |
-| POST | /account/withdrawals | ✅ | ➖ | ❌ | ❌ |
-| GET | /account/withdrawals | ✅ | ✅ | ❌ | ❌ |
-| GET | /account/bankstatements | ✅ | ✅ | ❌ | ❌ |
-| GET | /account/documents | ✅ | ✅ | ❌ | ❌ |
+| POST | /account/withdrawals | ✅ | ➖ | ❌ | ✅ |
+| GET | /account/withdrawals | ✅ | ✅ | ❌ | ✅ |
+| GET | /account/bankstatements | ✅ | ✅ | ❌ | ✅ |
+| GET | /account/documents | ✅ | ✅ | ❌ | ✅ |
 | <b>Orders</b> | | | | | |
 | POST | /orders | ✅ | ➖ | ❌ | ❌ |
 | POST | /orders/{order_id}/activate | ✅ | ➖ | ❌ | ❌ |
