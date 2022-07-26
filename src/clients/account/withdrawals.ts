@@ -21,7 +21,7 @@ export default class WithdrawalsClinet extends Client<Withdrawal> {
 
     public async get(options?: WithdrawalsGetRequest) {
         return new Promise<ResponsePage<Withdrawal>>(async resolve => {
-            const response = await this.http_client.get("/withdrawals", { query: options });
+            const response = await this.http_client.get("/account/withdrawals", { query: options });
             resolve(new PageBuilder<Withdrawal>(this.http_client, this.cache_layer).build(response));
         });
     }
