@@ -1,5 +1,5 @@
-import Client, { ClientOptions } from "./client";
-import ResponsePage from "./response_page";
+import Client, { ClientOptions } from "../client";
+import ResponsePage from "../response_page";
 
 interface WithdrawalsCreateRequest {
     amount: bigint
