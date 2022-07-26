@@ -26,6 +26,7 @@ const client = new lemon.Client({
     * [Account](#Account)
         * [Withdrawal](#Withdrawal)
         * [Bankstatement](#BankStatement)
+        * [Document](#Document)
 
 
 # Documentation
