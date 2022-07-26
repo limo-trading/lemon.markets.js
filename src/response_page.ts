@@ -20,12 +20,16 @@ export class PageBuilder<T> {
         this.cacheLayer = cacheLayer;
     }
 
-    public build(res: any, useId?: string): ResponsePage<T> {
+    public build(res: any, useId?: string | ((data: T) => string)): ResponsePage<T> {
         // cache
         if (this.cacheLayer) {
             // @ts-ignore
             res.results.forEach(element => {
-                this.cacheLayer!.set(useId ? element[useId] : element.id, element);
+                if(useId && typeof useId !== 'string') {
+                    this.cacheLayer!.set(useId(element), element);
+                }else {
+                    this.cacheLayer!.set(useId ? element[useId] : element.id, element);
+                }
             });
         }
 
