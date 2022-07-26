@@ -4,8 +4,9 @@ import Cache from '../cache';
 import { LatestQuote } from "../@types/trades";
 
 interface RealtimeSubscribeRequest {
-    isin: string | string[];
-    callback: (data: LatestQuote) => void;
+    isin: string | string[]
+    callback: (data: LatestQuote) => void
+    allowOutOfOrder?: boolean
 }
 
 interface RealtimeAuthResponse {
@@ -61,8 +62,10 @@ export default class Realtime extends Client<LatestQuote> {
                 const { name, data } = message;
                 switch(name) {
                     case 'quotes':
-                        const last_quote = this.cache_layer.get(data.isin) || {};
+                        if(options.allowOutOfOrder) return options.callback(data);
+
                         // check if quote is newer than last quote
+                        const last_quote = this.cache_layer.get(data.isin) || {};
                         if(new Date(last_quote.t || 0).getTime() < new Date(data.t).getTime()) {
                             this.cache_layer.set(data.isin, data);
                             options.callback(data);
