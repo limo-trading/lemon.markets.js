@@ -44,6 +44,8 @@ If your requested data is too large, it is split across multiple pages.
 | values | T[] | |
 
 ## Trading
+
+---
 ### Account
 
 | Name | Type | Description |
@@ -62,20 +64,17 @@ If your requested data is too large, it is split across multiple pages.
 | amount_open_withdrawals | number | |
 | amount_estimate_taxes | number | |
 
----
-
 Get
 ```ts
 const account: Account = await client.account.get()
 ```
-
----
 
 Cache
 ```ts
 const account: Account = client.account.cache()
 ```
 
+---
 ### Withdrawal
 
 | Name | Type | Description |
@@ -85,7 +84,6 @@ const account: Account = client.account.cache()
 | created_at | string | |
 | idempotency | string | |
 
----
 Get
 <br/>
 <b>Params</b>
@@ -99,14 +97,10 @@ const response: ResponsePage<Withdrawal> = await client.account.withdrawals.get(
 const withdrawals: Withdrawal[] = response.values
 ```
 
----
-
 Cache
 ```ts
 const withdrawals: Withdrawal[] = client.account.withdrawals.cache()
 ```
-
----
 
 Create
 <br/>
@@ -121,6 +115,7 @@ Create
 const result: boolean = await client.account.withdrawals.create({ amount: 10, pin: 10 })
 ```
 
+---
 ### BankStatement
 
 | Name | Type | Description |
@@ -133,8 +128,6 @@ const result: boolean = await client.account.withdrawals.create({ amount: 10, pi
 | isin | string | |
 | isin_title | string | |
 | created_at | string | |
-
----
 
 Get
 <br/>
@@ -153,13 +146,12 @@ const page: ResponsePage<BankStatement> = await client.account.bankstatements.ge
 const bankstatements: BankStatement[] = page.values
 ```
 
----
-
 Cache
 ```ts
 const bankstatements: BankStatement[] = client.account.bankstatements.cache()
 ```
 
+---
 ### Document
 
 | Name | Type | Description |
@@ -172,15 +164,11 @@ const bankstatements: BankStatement[] = client.account.bankstatements.cache()
 | viewed_first_at | string | |
 | viewed_last_at | string | |
 
----
-
 Get
 ```ts
 const page: ResponsePage<Document> = await client.account.documents.get()
 cosnt documents: Document[] = page.values
 ```
-
----
 
 Cache
 ```ts
