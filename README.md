@@ -1,6 +1,11 @@
 # lemon.markets.js
 
-### Coverage
+## Versions
+| sdk version | api version |
+| - | - |
+| ^1.0.0 | v1 |
+
+## Coverage
 
 `⚠ NOTE: Completed routes can change to unfinished-state again. depends on the current development goals` <br/>
 
