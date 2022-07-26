@@ -1,6 +1,7 @@
 import Client, { ClientOptions } from "./client";
 import Withdrawals from "./account/withdrawals";
 import BankStatements from "./account/bankstatements";
+import { Documents } from "./account/documents";
 
 interface AccountResponse {
     account_id: string
@@ -22,12 +23,14 @@ export default class Account extends Client {
 
     public withdrawals: Withdrawals;
     public bankstatements: BankStatements;
+    public documents: Documents;
 
     constructor(options: ClientOptions) {
         super(options);
 
         this.withdrawals = new Withdrawals(options);
         this.bankstatements = new BankStatements(options);
+        this.documents = new Documents(options);
     }
 
     public async get() {
@@ -36,6 +39,4 @@ export default class Account extends Client {
             resolve(response.results);
         });
     }
-
-    // TODO: GET /account/documents
 }
