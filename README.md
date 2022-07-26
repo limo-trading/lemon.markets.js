@@ -3,7 +3,7 @@
 ## Versions
 | sdk version | api version |
 | - | - |
-| ^1.x | v1 |
+| 1.x | v1 |
 
 ## Getting started
 
@@ -22,15 +22,15 @@ const client = new lemon.Client({
 })
 ```
 
+# Documentation
+
 * [Trading](#Trading)
     * [Account](#Account)
         * [Withdrawal](#Withdrawal)
         * [Bankstatement](#BankStatement)
         * [Document](#Document)
 
-
-# Documentation
-
+---
 ## ResponsePage
 If you request too much data, your answer will be split into multiple pages.
 
@@ -167,7 +167,7 @@ const bankstatements: BankStatement[] = client.account.bankstatements.cache()
 Get
 ```ts
 const page: ResponsePage<Document> = await client.account.documents.get()
-cosnt documents: Document[] = page.values
+const documents: Document[] = page.values
 ```
 
 Cache
