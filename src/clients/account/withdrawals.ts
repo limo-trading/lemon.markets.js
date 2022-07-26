@@ -13,7 +13,7 @@ interface WithdrawalsGetRequest {
     page?: number
 }
 
-export default class WithdrawalsClinet extends Client<Withdrawal> {
+export default class WithdrawalsClient extends Client<Withdrawal> {
 
     constructor(options: ClientOptions) {
         super(options);
