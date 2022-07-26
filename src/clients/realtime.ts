@@ -1,4 +1,4 @@
-import Client, { ClientOptions } from "./client";
+import Client, { ClientOptions } from "../client";
 
 // Cache layer is required to make realtime possible.
 

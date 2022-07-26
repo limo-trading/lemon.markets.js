@@ -1,4 +1,4 @@
-import HttpClient from "../http_client"
+import HttpClient from "./http_client"
 
 export default interface ResponsePage<T> {
     page: number

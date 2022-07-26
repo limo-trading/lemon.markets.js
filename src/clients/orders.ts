@@ -1,6 +1,6 @@
 import HttpClient from "../http_client";
-import Client, { ClientOptions } from "./client";
-import ResponsePage, { toResponsePage } from "./response_page";
+import Client, { ClientOptions } from "../client";
+import ResponsePage, { toResponsePage } from "../response_page";
 
 type OrderStatus = 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
 

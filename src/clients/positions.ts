@@ -1,7 +1,7 @@
-import Client, { ClientOptions } from './client';
+import Client, { ClientOptions } from '../client';
 import Statements from './positions/statements';
 import Performance from './positions/performance';
-import ResponsePage, { toResponsePage } from './response_page';
+import ResponsePage, { toResponsePage } from '../response_page';
 
 interface PositionsGetRequest {
     isin?: string

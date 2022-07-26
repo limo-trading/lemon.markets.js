@@ -1,4 +1,4 @@
-import HttpClient from "../http_client";
+import HttpClient from "./http_client";
 
 export interface ClientOptions {
     http_client: HttpClient;

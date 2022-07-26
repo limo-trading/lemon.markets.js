@@ -1,5 +1,5 @@
-import Client, { ClientOptions } from "../client";
-import ResponsePage, { toResponsePage } from "../response_page";
+import Client, { ClientOptions } from "../../client";
+import ResponsePage, { toResponsePage } from "../../response_page";
 
 type BankStatementType = 'pay_in' | 'pay_out' | 'order_buy' | 'order_sell' | 'eod_balance' | 'dividend' | 'tax_refunded'
 
