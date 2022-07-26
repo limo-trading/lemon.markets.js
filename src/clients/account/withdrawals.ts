@@ -1,5 +1,6 @@
 import Client, { ClientOptions } from "../../client";
 import ResponsePage, { PageBuilder } from "../../response_page";
+import { Withdrawal } from "../../types/withdrawal";
 
 interface WithdrawalsCreateRequest {
     amount: number
@@ -12,24 +13,16 @@ interface WithdrawalsGetRequest {
     page?: number
 }
 
-interface WithdrawalsGetResponse {
-    id: string
-    amount: string
-    created_at: string
-    date: string
-    idempotency: string
-}
-
-export default class Withdrawals extends Client<WithdrawalsGetResponse> {
+export default class WithdrawalsClinet extends Client<Withdrawal> {
 
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public async get(options?: WithdrawalsGetRequest) {
-        return new Promise<ResponsePage<WithdrawalsGetResponse>>(async resolve => {
+        return new Promise<ResponsePage<Withdrawal>>(async resolve => {
             const response = await this.http_client.get("/withdrawals", { query: options });
-            resolve(new PageBuilder<WithdrawalsGetResponse>(this.http_client, this.cache_layer).build(response));
+            resolve(new PageBuilder<Withdrawal>(this.http_client, this.cache_layer).build(response));
         });
     }
 
