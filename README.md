@@ -11,7 +11,7 @@
 
 ✅ Completed <br/>
 ❌ Not completed <br/>
-➖ Works, but not in final state <br/>
+➖ Will not be worked on <br/>
 
 | method | path | covered | cache | documentation |  
 | - | - | - | - | - | 
@@ -32,11 +32,11 @@
 | GET | /positions/statements | ✅ | ❌ | ❌ |
 | GET | /positions/performance | ✅ | ❌ | ❌ |
 | <b>Market data</b> | | | | |
-| GET | /instruments | ❌ | ❌ | ❌ |
-| GET | /venues | ❌ | ❌ | ❌ |
-| GET | /quotes/latest | ✅ | ❌ | ❌ |
+| GET | /instruments | ✅ | ❌ | ❌ |
+| GET | /venues | ✅ | ❌ | ❌ |
+| GET | /quotes/latest | ✅ | ➖ | ❌ |
 | GET | /ohlc/{x1} | ❌ | ❌ | ❌ |
-| GET | /trades/latest | ❌ | ❌ | ❌ |
+| GET | /trades/latest | ✅ | ➖ | ❌ |
 | <b>Realtime</b> | | | | |
 | POST | /auth | ❌ | ❌ | ❌ |
 | - | ably_sdk | ❌ |  ❌ | ❌ |
