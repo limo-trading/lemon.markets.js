@@ -5,7 +5,7 @@ import ResponsePage, { PageBuilder } from "../response_page";
 type OrderStatus = 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
 
 interface ActivateRequest {
-    pin: bigint
+    pin: number
 }
 
 interface Order {
@@ -40,11 +40,11 @@ interface OrderGetResponse {
     expires_at: string
     created_at: string
     side: 'buy' | 'sell'
-    quantity: bigint
-    stop_price: bigint
-    limit_price: bigint
-    estimated_price: bigint
-    estimated_price_total: bigint
+    quantity: number
+    stop_price: number
+    limit_price: number
+    estimated_price: number
+    estimated_price_total: number
     venue: string
     status: OrderStatus
 }

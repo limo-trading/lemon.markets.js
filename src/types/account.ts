@@ -4,12 +4,12 @@ export interface Account {
     lastname: string
     iban_brokerage: string
     iban_origin: string
-    balance: bigint
-    cash_to_invest: bigint
-    cash_to_withdraw: bigint
-    amount_bought_intraday: bigint
-    amount_sold_intraday: bigint
-    amount_open_orders: bigint
-    amount_open_withdrawals: bigint
-    amount_estimate_taxes: bigint
+    balance: number
+    cash_to_invest: number
+    cash_to_withdraw: number
+    amount_bought_intraday: number
+    amount_sold_intraday: number
+    amount_open_orders: number
+    amount_open_withdrawals: number
+    amount_estimate_taxes: number
 }

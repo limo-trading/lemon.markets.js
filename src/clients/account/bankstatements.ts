@@ -8,8 +8,8 @@ interface BankStatementsGetRequest {
     from?: string
     to?: string
     sorting?: 'asc' | 'desc'
-    limit?: bigint
-    page?: bigint
+    limit?: number
+    page?: number
 }
 
 interface BankStatementsGetResponse {
@@ -17,7 +17,7 @@ interface BankStatementsGetResponse {
     account_id: string
     type: BankStatementType
     date: string
-    amount: bigint
+    amount: number
     isin: string
     isin_title: string
     created_at: string

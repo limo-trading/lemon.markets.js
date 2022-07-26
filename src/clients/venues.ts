@@ -3,8 +3,8 @@ import ResponsePage, { PageBuilder } from "../response_page";
 
 interface VenuesGetRequest {
     mic?: string
-    limit?: bigint
-    page?: bigint
+    limit?: number
+    page?: number
 }
 
 interface VenuesGetResponse {

@@ -5,8 +5,8 @@ type StatementType = 'order_buy' | 'order_sell' | 'split' | 'import' | 'snx'
 
 interface StatementGetRequest {
     type?: StatementType
-    limit?: bigint
-    page?: bigint
+    limit?: number
+    page?: number
 }
 
 interface StatementGetResponse {

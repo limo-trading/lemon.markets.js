@@ -2,14 +2,14 @@ import Client, { ClientOptions } from "../../client";
 import ResponsePage, { PageBuilder } from "../../response_page";
 
 interface WithdrawalsCreateRequest {
-    amount: bigint
-    pin: bigint
+    amount: number
+    pin: number
     idempotency?: string
 }
 
 interface WithdrawalsGetRequest {
-    limit?: bigint
-    page?: bigint
+    limit?: number
+    page?: number
 }
 
 interface WithdrawalsGetResponse {

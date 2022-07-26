@@ -6,21 +6,21 @@ interface PerformanceGetRequest {
     from?: string
     to?: string
     sorting?: 'asc' | 'desc'
-    limit?: bigint
-    page?: bigint
+    limit?: number
+    page?: number
 }
 
 interface PerformanceGetResponse {
     isin: string
     isin_title: string
-    profit: bigint
-    loss: bigint
-    quantity_bought: bigint
-    quantity_sold: bigint
-    quantity_open: bigint
+    profit: number
+    loss: number
+    quantity_bought: number
+    quantity_sold: number
+    quantity_open: number
     opened_at: string
     closed_at: string
-    fees: bigint
+    fees: number
 }
 
 export default class Performance extends Client<PerformanceGetResponse> {
