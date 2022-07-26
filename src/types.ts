@@ -31,3 +31,16 @@ export interface Withdrawal {
     date: string
     idempotency: string
 }
+
+export type BankStatementType = 'pay_in' | 'pay_out' | 'order_buy' | 'order_sell' | 'eod_balance' | 'dividend' | 'tax_refunded'
+
+export interface BankStatement {
+    id: string
+    account_id: string
+    type: BankStatementType
+    date: string
+    amount: number
+    isin: string
+    isin_title: string
+    created_at: string
+}
