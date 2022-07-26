@@ -1,6 +1,6 @@
-import { LatestQuote } from "../types/trades";
 import Client, { ClientOptions } from "../client";
 import ResponsePage, {PageBuilder } from "../response_page";
+import { LatestQuote } from "../types";
 
 export default class Quotes extends Client<void> {
 

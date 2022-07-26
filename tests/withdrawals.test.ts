@@ -1,6 +1,5 @@
+import { Withdrawal } from "../src/types";
 import client from "./client";
-import ResponsePage from "../src/response_page";
-import { Withdrawal } from "../src/types/withdrawal";
 
 describe('test withdrawals route', () => {
 
