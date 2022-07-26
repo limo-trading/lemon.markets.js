@@ -1,5 +1,4 @@
-import HttpClient from '../http_client';
-import ClientOptions from './client';
+import Client, { ClientOptions } from './client';
 import ResponsePage from './response_page';
 
 interface PositionsGetRequest {
@@ -17,12 +16,10 @@ interface PositionsGetResponse {
     estimated_price: number
 }
 
-export default class Positions {
-
-    private http_client: HttpClient;
+export default class Positions extends Client {
 
     constructor(options: ClientOptions) {
-        this.http_client = options.http_client;
+        super(options);
     }
 
     public get(options?:PositionsGetRequest) {
