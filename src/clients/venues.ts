@@ -17,7 +17,7 @@ export default class VenuesClient extends Client<Venue> {
     public get(options?: VenuesGetRequest) {
         return new Promise<ResponsePage<Venue>>(async resolve => {
             const response = await this.httpClient.get('/venues', { query: options });
-            resolve(new PageBuilder<Venue>(this.httpClient, this.cacheLayer).build(response));
+            resolve(new PageBuilder<Venue>(this.httpClient, this.cacheLayer).build(response, 'mic'));
         })
     }
 
