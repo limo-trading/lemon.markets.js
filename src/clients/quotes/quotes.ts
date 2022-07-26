@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from "../../client";
-import ResponsePage, { toResponsePage } from "../../response_page";
+import ResponsePage, {PageBuilder } from "../../response_page";
 
 interface LatestResponse {
     isin: string
@@ -11,7 +11,7 @@ interface LatestResponse {
     mic: string
 }
 
-export default class Quotes extends Client {
+export default class Quotes extends Client<void> {
 
     constructor(options: ClientOptions) {
         super(options);
@@ -20,7 +20,7 @@ export default class Quotes extends Client {
     public async latest(options: { isin: string, mic?: string }) {
         return new Promise<ResponsePage<LatestResponse>>(async resolve => {
             const response = await this.http_client.get('/quotes/latest', { query: options });
-            resolve(toResponsePage(response, this.http_client));
+            resolve(new PageBuilder<LatestResponse>(this.http_client).build(response));
         })
     }
 }

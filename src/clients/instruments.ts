@@ -1,15 +1,15 @@
 import Client, { ClientOptions } from "../client";
-import ResponsePage, { toResponsePage } from "../response_page";
+import ResponsePage, { PageBuilder } from "../response_page";
 
 type InstrumentType = 'stock' | 'etf'
 
-interface IntrumentsGetRequest {
+interface InstrumentsGetRequest {
     isin?: string | string[10];
     search?: string;
     type?: InstrumentType;
 }
 
-interface IntrumentsGetResponse {
+interface InstrumentsGetResponse {
     isin: string;
     wkn: string;
     name: string;
@@ -18,16 +18,20 @@ interface IntrumentsGetResponse {
     type: InstrumentType;
 }
 
-export default class Instruments extends Client {
+export default class Instruments extends Client<InstrumentsGetResponse> {
     
     constructor(options: ClientOptions) {
         super(options);
     }
 
-    public get(options: IntrumentsGetRequest) {
-        return new Promise<ResponsePage<IntrumentsGetResponse>>(async resolve => {
+    public get(options: InstrumentsGetRequest) {
+        return new Promise<ResponsePage<InstrumentsGetResponse>>(async resolve => {
             const response = await this.http_client.get('/instruments', { query: options });
-            resolve(toResponsePage(response, this.http_client));
+            resolve(new PageBuilder<InstrumentsGetResponse>(this.http_client, this.cache_layer).build(response));
         })
+    }
+
+    public cache() {
+        return this.cache_layer.getAll();
     }
 }

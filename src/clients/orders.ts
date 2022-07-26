@@ -1,6 +1,6 @@
 import HttpClient from "../http_client";
 import Client, { ClientOptions } from "../client";
-import ResponsePage, { toResponsePage } from "../response_page";
+import ResponsePage, { PageBuilder } from "../response_page";
 
 type OrderStatus = 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
 
@@ -57,7 +57,7 @@ const activateFunction = async(options: ActivateRequest, id: string, http_client
     })
 }
 
-export default class Orders extends Client {
+export default class Orders extends Client<OrderGetResponse> {
 
     constructor(options: ClientOptions) {
         super(options);
@@ -83,9 +83,10 @@ export default class Orders extends Client {
     private getOne(order_id: string) {
         return new Promise<OrderGetResponse>(async resolve => {
             const response = await this.http_client.get(`/orders/${order_id}`)
+            this.cache_layer.set(response.results[0].id, response.results)
             resolve({
                 activate: response.results.status === 'inactive' ? (options: ActivateRequest) => activateFunction(options, response.results.id, this.http_client) : undefined,
-                ...response.results,
+                ...response.results[0],
             })
         })
     }
@@ -100,7 +101,7 @@ export default class Orders extends Client {
                 ...order,
             }))
             response.results = orders;
-            resolve(toResponsePage(response, this.http_client))
+            resolve(new PageBuilder(this.http_client, this.cache_layer).build(response))
         })
     }
 
@@ -109,5 +110,9 @@ export default class Orders extends Client {
             const response = await this.http_client.delete(`/orders/${order_id}`)
             resolve(response.status === 'ok')
         })
+    }
+
+    public cache() {
+        return this.cache_layer.getAll();
     }
 }

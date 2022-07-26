@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from "../../client";
-import ResponsePage, { toResponsePage } from "../../response_page";
+import ResponsePage, { PageBuilder } from "../../response_page";
 
 interface DocumentsGetResponse {
     id: string
@@ -11,7 +11,7 @@ interface DocumentsGetResponse {
     viewed_last_at: string
 }
 
-export class Documents extends Client {
+export class Documents extends Client<DocumentsGetResponse> {
     
     constructor(options: ClientOptions) {
         super(options);
@@ -20,7 +20,11 @@ export class Documents extends Client {
     public get() {
         return new Promise<ResponsePage<DocumentsGetResponse>>(async resolve => {
             const response = await this.http_client.get('/account/documents');
-            resolve(toResponsePage(response, this.http_client));
+            resolve(new PageBuilder<DocumentsGetResponse>(this.http_client, this.cache_layer).build(response));
         });
+    }
+
+    public cache() {
+        return this.cache_layer.getAll();
     }
 }

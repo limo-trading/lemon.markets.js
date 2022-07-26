@@ -6,7 +6,7 @@ interface RealtimeSubscribeRequest {
     isin: string | string[];
 }
 
-export default class Realtime extends Client {
+export default class Realtime extends Client<void> {
 
     constructor(options: ClientOptions) {
         super(options);

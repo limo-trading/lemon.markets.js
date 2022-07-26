@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from "../../client";
-import ResponsePage, { toResponsePage } from "../../response_page";
+import ResponsePage, { PageBuilder } from "../../response_page";
 
 type BankStatementType = 'pay_in' | 'pay_out' | 'order_buy' | 'order_sell' | 'eod_balance' | 'dividend' | 'tax_refunded'
 
@@ -23,7 +23,7 @@ interface BankStatementsGetResponse {
     created_at: string
 }
 
-export default class BankStatements extends Client {
+export default class BankStatements extends Client<BankStatementsGetResponse> {
     
     constructor(options: ClientOptions) {
         super(options);
@@ -32,7 +32,11 @@ export default class BankStatements extends Client {
     public get(options?: BankStatementsGetRequest) {
         return new Promise<ResponsePage<BankStatementsGetResponse>>(async resolve => {
             const response = await this.http_client.get('/account/bankstatements', { query: options });
-            resolve(toResponsePage(response, this.http_client));
+            resolve(new PageBuilder(this.http_client, this.cache_layer).build(response));
         });
+    }
+
+    public cache() {
+        return this.cache_layer.getAll();
     }
 }

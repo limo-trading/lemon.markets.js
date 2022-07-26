@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from "../../client";
-import ResponsePage, { toResponsePage } from "../../response_page";
+import ResponsePage, { PageBuilder } from "../../response_page";
 
 interface WithdrawalsCreateRequest {
     amount: bigint
@@ -20,7 +20,7 @@ interface WithdrawalsGetResponse {
     idempotency: string
 }
 
-export default class Withdrawals extends Client {
+export default class Withdrawals extends Client<WithdrawalsGetResponse> {
 
     constructor(options: ClientOptions) {
         super(options);
@@ -29,7 +29,7 @@ export default class Withdrawals extends Client {
     public async get(options?: WithdrawalsGetRequest) {
         return new Promise<ResponsePage<WithdrawalsGetResponse>>(async resolve => {
             const response = await this.http_client.get("/withdrawals", { query: options });
-            resolve(toResponsePage(response, this.http_client));
+            resolve(new PageBuilder<WithdrawalsGetResponse>(this.http_client, this.cache_layer).build(response));
         });
     }
 
@@ -39,5 +39,9 @@ export default class Withdrawals extends Client {
             if(response.status === 'ok') resolve(true);
             else resolve(false);
         });
+    }
+
+    public cache() {
+        return this.cache_layer.getAll();
     }
 }

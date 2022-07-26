@@ -19,7 +19,7 @@ interface AccountResponse {
     amount_estimate_taxes: bigint
 }
 
-export default class Account extends Client {
+export default class Account extends Client<AccountResponse> {
 
     public withdrawals: Withdrawals;
     public bankstatements: BankStatements;
@@ -36,7 +36,12 @@ export default class Account extends Client {
     public async get() {
         return new Promise<AccountResponse>(async resolve => {
             const response = await this.http_client.get("/account");
+            this.cache_layer.setDefault(response);
             resolve(response.results);
         });
+    }
+
+    public cache() {
+        return this.cache_layer.getDefault();
     }
 }

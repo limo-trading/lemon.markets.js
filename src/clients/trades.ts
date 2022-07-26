@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from "../client";
-import ResponsePage, { toResponsePage } from "../response_page";
+import ResponsePage, { PageBuilder } from "../response_page";
 
 interface TradesGetRequest {
     isin: string | string[10]
@@ -16,7 +16,7 @@ interface TradesGetResponse {
     mic: string
 }
 
-export default class Trades extends Client {
+export default class Trades extends Client<void> {
     
     constructor(options: ClientOptions) {
         super(options);
@@ -25,7 +25,7 @@ export default class Trades extends Client {
     public latest(options: TradesGetRequest) {
         return new Promise<ResponsePage<TradesGetResponse>>(async resolve => {
             const response = await this.http_client.get('/trades/latest', { query: options });
-            resolve(toResponsePage(response.results, this.http_client));
+            resolve(new PageBuilder<TradesGetResponse>(this.http_client).build(response.results));
         })
     }
 }

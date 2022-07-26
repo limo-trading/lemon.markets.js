@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from "../client";
-import ResponsePage, { toResponsePage } from "../response_page";
+import ResponsePage, { PageBuilder } from "../response_page";
 
 interface VenuesGetRequest {
     mic?: string
@@ -14,7 +14,7 @@ interface VenuesGetResponse {
     is_open: boolean
 }
 
-export default class Venues extends Client {
+export default class Venues extends Client<VenuesGetResponse> {
 
     constructor(options: ClientOptions) {
         super(options);
@@ -23,7 +23,11 @@ export default class Venues extends Client {
     public get(options?: VenuesGetRequest) {
         return new Promise<ResponsePage<VenuesGetResponse>>(async resolve => {
             const response = await this.http_client.get('/venues', { query: options });
-            resolve(toResponsePage(response, this.http_client));
+            resolve(new PageBuilder<VenuesGetResponse>(this.http_client, this.cache_layer).build(response));
         })
+    }
+
+    public cache() {
+        return this.cache_layer.getAll();
     }
 }

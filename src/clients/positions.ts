@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from '../client';
 import Statements from './positions/statements';
 import Performance from './positions/performance';
-import ResponsePage, { toResponsePage } from '../response_page';
+import ResponsePage, { PageBuilder } from '../response_page';
 
 interface PositionsGetRequest {
     isin?: string
@@ -18,7 +18,7 @@ interface PositionsGetResponse {
     estimated_price: number
 }
 
-export default class Positions extends Client {
+export default class Positions extends Client<PositionsGetResponse> {
 
     public statements: Statements;
     public performance: Performance;
@@ -33,7 +33,11 @@ export default class Positions extends Client {
     public get(options?:PositionsGetRequest) {
         return new Promise<ResponsePage<PositionsGetResponse>>(async resolve => {
             const response = await this.http_client.get('/positions', { query: options });
-            resolve(toResponsePage(response, this.http_client));
+            resolve(new PageBuilder<PositionsGetResponse>(this.http_client, this.cache_layer).build(response));
         })
+    }
+
+    public cache() {
+        return this.cache_layer.getAll();
     }
 }
