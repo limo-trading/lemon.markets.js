@@ -25,8 +25,8 @@
 | POST | /orders | ✅ | ❌ | ❌ |
 | POST | /orders/{order_id}/activate | ➖ | ❌ | ❌ |
 | GET | /orders | ✅ | ❌ | ❌ |
-| GET | /orders/{order_id} | ❌ | ❌ | ❌ |
-| DELETE | /orders/{order_id} | ❌ | ❌ | ❌ |
+| GET | /orders/{order_id} | ✅ | ❌ | ❌ |
+| DELETE | /orders/{order_id} | ✅ | ❌ | ❌ |
 | <b>Positions</b> | | |
 | GET | /positions | ✅ | ❌ | ❌ |
 | GET | /positions/statements | ❌ | ❌ | ❌ |

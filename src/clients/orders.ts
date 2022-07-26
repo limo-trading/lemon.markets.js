@@ -25,6 +25,7 @@ interface Order {
 }
 
 interface OrderGetRequest {
+    order_id?: string
     from?: string
     to?: string
     isin?: string
@@ -79,7 +80,18 @@ export default class Orders extends Client {
         })
     }
 
+    private getOne(order_id: string) {
+        return new Promise<OrderGetResponse>(async resolve => {
+            const response = await this.http_client.get(`/orders/${order_id}`)
+            resolve({
+                activate: response.results.status === 'inactive' ? (options: ActivateRequest) => activateFunction(options, response.results.id, this.http_client) : undefined,
+                ...response.results,
+            })
+        })
+    }
+
     public get(options?: OrderGetRequest) {
+        if(options?.order_id) return this.getOne(options.order_id);
         return new Promise<ResponsePage<OrderGetResponse>>(async resolve => {
             const response = await this.http_client.get('/orders', { query: options })
             // add activate method to each inactive order
@@ -97,6 +109,13 @@ export default class Orders extends Client {
                     if(response.next) this.http_client.external_fetch(response.next);
                 }
             })
+        })
+    }
+
+    public cancel(order_id: string) {
+        return new Promise<boolean>(async resolve => {
+            const response = await this.http_client.delete(`/orders/${order_id}`)
+            resolve(response.status === 'ok')
         })
     }
 
