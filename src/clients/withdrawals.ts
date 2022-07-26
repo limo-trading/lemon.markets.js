@@ -1,5 +1,4 @@
-import HttpClient from "../http_client";
-import ClientOptions from "./client_options";
+import Client, { ClientOptions } from "./client";
 import ResponsePage from "./response_page";
 
 interface WithdrawalsCreateRequest {
@@ -21,12 +20,10 @@ interface WithdrawalsGetResponse {
     idempotency: string
 }
 
-export default class Withdrawals {
-
-    private http_client: HttpClient;
+export default class Withdrawals extends Client {
 
     constructor(options: ClientOptions) {
-        this.http_client = options.http_client;
+        super(options);
     }
 
     public async get(options?: WithdrawalsGetRequest) {

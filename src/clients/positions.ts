@@ -1,5 +1,5 @@
 import HttpClient from '../http_client';
-import ClientOptions from './client_options';
+import ClientOptions from './client';
 import ResponsePage from './response_page';
 
 interface PositionsGetRequest {

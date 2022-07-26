@@ -1,5 +1,4 @@
-import HttpClient from "../http_client";
-import ClientOptions from "./client_options";
+import Client, { ClientOptions } from "./client";
 import Withdrawals from "./withdrawals";
 
 interface AccountResponse {
@@ -18,14 +17,12 @@ interface AccountResponse {
     amount_estimate_taxes: bigint
 }
 
-export default class Account {
-
-    private http_client: HttpClient;
+export default class Account extends Client {
 
     public withdrawals: Withdrawals;
 
     constructor(options: ClientOptions) {
-        this.http_client = options.http_client;
+        super(options);
         this.withdrawals = new Withdrawals(options);
     }
 

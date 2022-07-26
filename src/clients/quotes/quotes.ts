@@ -1,5 +1,4 @@
-import HttpClient from "../../http_client";
-import ClientOptions from "../client_options";
+import Client, { ClientOptions } from "../client";
 import ResponsePage from "../response_page";
 
 interface LatestResponse {
@@ -12,12 +11,10 @@ interface LatestResponse {
     mic: string
 }
 
-export default class Quotes {
-
-    private http_client: HttpClient;
+export default class Quotes extends Client {
 
     constructor(options: ClientOptions) {
-        this.http_client = options.http_client;
+        super(options);
     }
 
     public async latest(options: { isin: string, mic?: string }) {

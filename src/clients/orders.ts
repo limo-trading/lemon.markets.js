@@ -1,5 +1,5 @@
 import HttpClient from "../http_client";
-import ClientOptions from "./client_options";
+import Client, { ClientOptions } from "./client";
 import ResponsePage from "./response_page";
 
 type OrderStatus = 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
@@ -56,12 +56,10 @@ const activateFunction = async(options: ActivateRequest, id: string, http_client
     })
 }
 
-export default class Orders {
-
-    private http_client: HttpClient;
+export default class Orders extends Client {
 
     constructor(options: ClientOptions) {
-        this.http_client = options.http_client;
+        super(options);
     }
 
     public async create(options: {
