@@ -1,4 +1,4 @@
-import { LatestQuote } from "../@types/trades";
+import { LatestQuote } from "../types/trades";
 import Client, { ClientOptions } from "../client";
 import ResponsePage, {PageBuilder } from "../response_page";
 

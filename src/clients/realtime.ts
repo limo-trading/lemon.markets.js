@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../client";
 import * as Ably from 'ably';
 import Cache from '../cache';
-import { LatestQuote } from "../@types/trades";
+import { LatestQuote } from "../types/trades";
 
 interface RealtimeSubscribeRequest {
     isin: string | string[]
