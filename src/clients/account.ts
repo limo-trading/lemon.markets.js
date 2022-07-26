@@ -2,24 +2,9 @@ import Client, { ClientOptions } from "../client";
 import Withdrawals from "./account/withdrawals";
 import BankStatements from "./account/bankstatements";
 import { Documents } from "./account/documents";
+import { Account } from "../types/account";
 
-interface AccountResponse {
-    account_id: string
-    firstname: string
-    lastname: string
-    iban_brokerage: string
-    iban_origin: string
-    balance: bigint
-    cash_to_invest: bigint
-    cash_to_withdraw: bigint
-    amount_bought_intraday: bigint
-    amount_sold_intraday: bigint
-    amount_open_orders: bigint
-    amount_open_withdrawals: bigint
-    amount_estimate_taxes: bigint
-}
-
-export default class Account extends Client<AccountResponse> {
+export default class AccountClient extends Client<Account> {
 
     public withdrawals: Withdrawals;
     public bankstatements: BankStatements;
@@ -34,9 +19,9 @@ export default class Account extends Client<AccountResponse> {
     }
 
     public async get() {
-        return new Promise<AccountResponse>(async resolve => {
+        return new Promise<Account>(async resolve => {
             const response = await this.http_client.get("/account");
-            this.cache_layer.setDefault(response);
+            this.cache_layer.setDefault(response.results);
             resolve(response.results);
         });
     }
