@@ -32,7 +32,7 @@ const client = new lemon.Client({
 # Documentation
 
 ## ResponsePage
-If your requested data is too large, it is split across multiple pages.
+If you request too much data, your answer will be split into multiple pages.
 
 | Name | Type | Description |
 | - | - | - |
