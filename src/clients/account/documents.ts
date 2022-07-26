@@ -1,26 +1,17 @@
 import Client, { ClientOptions } from "../../client";
 import ResponsePage, { PageBuilder } from "../../response_page";
+import { Document } from "../../types";
 
-interface DocumentsGetResponse {
-    id: string
-    name: string
-    created_at: string
-    category: string
-    link: string
-    viewed_first_at: string
-    viewed_last_at: string
-}
-
-export class Documents extends Client<DocumentsGetResponse> {
+export default class DocumentsClient extends Client<Document> {
     
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public get() {
-        return new Promise<ResponsePage<DocumentsGetResponse>>(async resolve => {
+        return new Promise<ResponsePage<Document>>(async resolve => {
             const response = await this.http_client.get('/account/documents');
-            resolve(new PageBuilder<DocumentsGetResponse>(this.http_client, this.cache_layer).build(response));
+            resolve(new PageBuilder<Document>(this.http_client, this.cache_layer).build(response));
         });
     }
 

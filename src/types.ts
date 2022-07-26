@@ -44,3 +44,13 @@ export interface BankStatement {
     isin_title: string
     created_at: string
 }
+
+export interface Document {
+    id: string
+    name: string
+    created_at: string
+    category: string
+    link: string
+    viewed_first_at: string
+    viewed_last_at: string
+}
