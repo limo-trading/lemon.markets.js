@@ -9,7 +9,9 @@ describe('test bankstatements route', () => {
         const res = await client.account.bankstatements.get()
         expect(res).toHaveProperty('values')
         expect(res.values.length).toBeGreaterThan(0)
-
+        
+        bankstatements = res.values
+        
         expect(res.values[0]).toHaveProperty('id')
         expect(res.values[0]).toHaveProperty('account_id')
         expect(res.values[0]).toHaveProperty('type')
@@ -19,7 +21,6 @@ describe('test bankstatements route', () => {
         expect(res.values[0]).toHaveProperty('isin_title')
         expect(res.values[0]).toHaveProperty('created_at')
 
-        bankstatements = res.values
     })
 
     it('should be cached', async () => {
