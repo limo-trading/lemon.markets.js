@@ -86,6 +86,7 @@ const account: Account = client.account.cache()
 
 ---
 Get
+<br/>
 <b>Params</b>
 | Name | Type | Description |
 | - | - | - |
@@ -107,6 +108,7 @@ const withdrawals: Withdrawal[] = client.account.withdrawals.cache()
 ---
 
 Create
+<br/>
 <b>Params</b>
 | Name | Type | Description |
 | - | - | - |
@@ -134,6 +136,8 @@ const result: boolean = await client.account.withdrawals.create({ amount: 10, pi
 ---
 
 Get
+<br/>
+<b>Params</b>
 | Name | Type | Description |
 | - | - | - |
 | type? | 'pay_in' \| 'pay_out' \| 'order_buy' \| 'order_sell' \| 'eod_balance' \| 'dividend' \| 'tax_refunded' | |
