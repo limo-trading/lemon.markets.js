@@ -14,7 +14,7 @@ export interface Account {
     amount_estimate_taxes: number
 }
 
-export interface LatestQuote {
+export interface Quote {
     isin: string
     b_v: number
     a_v: number

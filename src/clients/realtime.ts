@@ -1,11 +1,11 @@
 import Client, { ClientOptions } from "../client";
 import * as Ably from 'ably';
 import Cache from '../cache';
-import { LatestQuote } from "../types";
+import { Quote } from "../types";
 
 interface RealtimeSubscribeRequest {
     isin: string | string[]
-    callback: (data: LatestQuote) => void
+    callback: (data: Quote) => void
     allowOutOfOrder?: boolean
 }
 
@@ -15,7 +15,7 @@ interface RealtimeAuthResponse {
     user_id: string
 }
 
-export default class Realtime extends Client<LatestQuote> {
+export default class Realtime extends Client<Quote> {
 
     private authCache: Cache<RealtimeAuthResponse>;
     private connectionCache: Cache<Ably.Realtime>;
