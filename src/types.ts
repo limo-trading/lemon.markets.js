@@ -108,3 +108,10 @@ export interface Instrument {
     symbol: string;
     type: InstrumentType;
 }
+
+export interface Venue {
+    name: string
+    title: string
+    mic: string
+    is_open: boolean
+}
