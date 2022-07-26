@@ -1,14 +1,6 @@
 import HttpClient from "./http_client"
 import Cache from "./cache"
-
-export default interface ResponsePage<T> {
-    page: number
-    pages: number
-    total: number
-    previous: () => Promise<ResponsePage<T>>
-    next: () => Promise<ResponsePage<T>>
-    values: T[]
-}
+import { ResponsePage } from "./types";
 
 export class PageBuilder<T> {
 

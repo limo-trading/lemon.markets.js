@@ -57,7 +57,7 @@ export interface Document {
 
 export type OrderStatus = 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
 
-export interface Order{
+export interface Order {
     id: string
     isin: string
     isin_title: string
@@ -138,4 +138,13 @@ export interface OHLC {
 
 export interface RealtimeSubscription {
     close: () => void
+}
+
+export interface ResponsePage<T> {
+    page: number
+    pages: number
+    total: number
+    previous: () => Promise<ResponsePage<T>>
+    next: () => Promise<ResponsePage<T>>
+    values: T[]
 }
