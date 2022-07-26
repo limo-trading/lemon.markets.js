@@ -7,7 +7,7 @@ const env = load({
 
 const client = new lemon.Client({
     mode: 'paper',
-    trading_key: env.LEMON_API_KEY,
+    tradingKey: env.LEMON_API_KEY,
 });
 
 export default client;
