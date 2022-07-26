@@ -123,3 +123,15 @@ export interface Trade {
     t: string
     mic: string
 }
+
+export interface OHLC {
+    isin: string
+    o: number
+    h: number
+    l: number
+    c: number
+    v: number
+    pbv: number
+    t: string
+    mic: string
+}
