@@ -1,6 +1,6 @@
 import Client, { ClientOptions } from "../client"
-import ResponsePage, { PageBuilder } from "../response_page"
-import { OHLC } from "../types"
+import { PageBuilder } from "../response_page"
+import { OHLC, ResponsePage } from "../types"
 
 type DataType = 'm1' | 'h1' | 'd1'
 

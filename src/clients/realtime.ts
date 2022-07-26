@@ -44,12 +44,12 @@ export default class Realtime extends Client<Quote> {
 
             const auth = this.authCache.getDefault()
                 ? this.authCache.getDefault().expires_at < Date.now()
-                ? await this.auth() : this.authCache.getDefault() : await this.auth();
+                    ? await this.auth() : this.authCache.getDefault() : await this.auth();
 
             const connection = this.connectionCache.getDefault() || new Ably.Realtime({
                 token: auth.token,
                 transportParams: { remainPresentFor: 1000 },
-                authCallback: async(_, callback) => {
+                authCallback: async (_, callback) => {
                     const newAuth = await this.auth();
                     callback('', newAuth.token);
                 }
@@ -60,13 +60,13 @@ export default class Realtime extends Client<Quote> {
 
             quotes.subscribe((message) => {
                 const { name, data } = message;
-                switch(name) {
+                switch (name) {
                     case 'quotes':
-                        if(options.allowOutOfOrder) return options.callback(data);
+                        if (options.allowOutOfOrder) return options.callback(data);
 
                         // check if quote is newer than last quote
                         const lastQuote = this.cacheLayer.get(data.isin) || {};
-                        if(new Date(lastQuote.t || 0).getTime() < new Date(data.t).getTime()) {
+                        if (new Date(lastQuote.t || 0).getTime() < new Date(data.t).getTime()) {
                             this.cacheLayer.set(data.isin, data);
                             options.callback(data);
                         }
@@ -82,11 +82,11 @@ export default class Realtime extends Client<Quote> {
 
             resolve({
                 close: () => {
-                    return new Promise<void>(resolve => {
+                    return new Promise<void>(resolveClose => {
                         quotes.detach((err) => reject(err));
                         subscriptions.detach((err) => reject(err));
                         connection.close();
-                        resolve()
+                        resolveClose()
                     })
                 }
             });

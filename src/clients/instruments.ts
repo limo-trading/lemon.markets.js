@@ -1,6 +1,6 @@
 import Client, { ClientOptions } from "../client";
-import ResponsePage, { PageBuilder } from "../response_page";
-import { Instrument, InstrumentType } from "../types";
+import { PageBuilder } from "../response_page";
+import { Instrument, InstrumentType, ResponsePage } from "../types";
 
 interface InstrumentsGetRequest {
     isin?: string | string[10];

@@ -1,6 +1,6 @@
 import Client, { ClientOptions } from "../../client";
-import ResponsePage, { PageBuilder } from "../../response_page";
-import { Withdrawal } from "../../types";
+import { PageBuilder } from "../../response_page";
+import { Withdrawal, ResponsePage } from "../../types";
 
 interface WithdrawalsCreateRequest {
     amount: number

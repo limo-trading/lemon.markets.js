@@ -1,8 +1,8 @@
 import Client, { ClientOptions } from '../client';
 import Statements from './positions/statements';
 import Performance from './positions/performance';
-import ResponsePage, { PageBuilder } from '../response_page';
-import { Position } from '../types';
+import { PageBuilder } from '../response_page';
+import { Position, ResponsePage } from '../types';
 
 interface PositionsGetRequest {
     isin?: string

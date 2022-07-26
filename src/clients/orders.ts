@@ -1,7 +1,7 @@
 import HttpClient from "../http_client";
 import Client, { ClientOptions } from "../client";
-import ResponsePage, { PageBuilder } from "../response_page";
-import { Order, OrderConfirmation, OrderStatus } from "../types";
+import { PageBuilder } from "../response_page";
+import { Order, OrderConfirmation, OrderStatus, ResponsePage } from "../types";
 
 interface ActivateRequest {
     pin: number

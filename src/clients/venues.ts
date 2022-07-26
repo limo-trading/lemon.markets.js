@@ -1,6 +1,6 @@
 import Client, { ClientOptions } from "../client";
-import ResponsePage, { PageBuilder } from "../response_page";
-import { Venue } from "../types";
+import { PageBuilder } from "../response_page";
+import { Venue, ResponsePage } from "../types";
 
 interface VenuesGetRequest {
     mic?: string

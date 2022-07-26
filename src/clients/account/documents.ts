@@ -1,6 +1,6 @@
 import Client, { ClientOptions } from "../../client";
-import ResponsePage, { PageBuilder } from "../../response_page";
-import { Document } from "../../types";
+import { PageBuilder } from "../../response_page";
+import { Document, ResponsePage } from "../../types";
 
 export default class DocumentsClient extends Client<Document> {
 

@@ -1,5 +1,6 @@
 import Client, { ClientOptions } from "../../client";
-import ResponsePage, { PageBuilder } from "../../response_page";
+import { PageBuilder } from "../../response_page";
+import { ResponsePage } from "../../types";
 
 interface PerformanceGetRequest {
     isin?: string

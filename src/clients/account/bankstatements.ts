@@ -1,6 +1,6 @@
 import Client, { ClientOptions } from "../../client";
-import ResponsePage, { PageBuilder } from "../../response_page";
-import { BankStatement, BankStatementType } from "../../types";
+import { PageBuilder } from "../../response_page";
+import { BankStatement, BankStatementType, ResponsePage } from "../../types";
 
 interface BankStatementsGetRequest {
     type?: BankStatementType
@@ -11,7 +11,7 @@ interface BankStatementsGetRequest {
     page?: number
 }
 
-export default class BankStatements extends Client<BankStatement> {
+export default class BankStatementsClient extends Client<BankStatement> {
 
     constructor(options: ClientOptions) {
         super(options);
