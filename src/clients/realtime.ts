@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../client";
 import * as Ably from 'ably';
 import Cache from '../cache';
-import { Quote } from "../types";
+import { Quote, RealtimeSubscription } from "../types";
 
 interface RealtimeSubscribeRequest {
     isin: string | string[]
@@ -40,7 +40,7 @@ export default class Realtime extends Client<Quote> {
     }
 
     public subscribe(options: RealtimeSubscribeRequest) {
-        return new Promise<boolean>(async (resolve, reject) => {
+        return new Promise<RealtimeSubscription>(async (resolve, reject) => {
 
             const auth = this.authCache.getDefault()
                 ? this.authCache.getDefault().expires_at < Date.now()
@@ -80,7 +80,16 @@ export default class Realtime extends Client<Quote> {
                 reject(err)
             });
 
-            resolve(true);
+            resolve({
+                close: () => {
+                    return new Promise<void>(resolve => {
+                        quotes.detach((err) => reject(err));
+                        subscriptions.detach((err) => reject(err));
+                        connection.close();
+                        resolve()
+                    })
+                }
+            });
         })
     }
 }
