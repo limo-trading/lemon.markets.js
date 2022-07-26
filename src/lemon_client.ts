@@ -8,6 +8,7 @@ import Instruments from './clients/instruments';
 import Venues from './clients/venues';
 import Trades from './clients/trades';
 import Realtime from './clients/realtime';
+import OHLC from './clients/ohlc';
 
 type trading_mode = 'paper' | 'live';
 
@@ -31,6 +32,7 @@ export default class LemonClient {
     public venues: Venues;
     public trades: Trades;
     public realtime: Realtime;
+    public ohlc: OHLC;
 
     constructor(options:GeneralClientOptions) {
 
@@ -53,6 +55,7 @@ export default class LemonClient {
         this.instruments = new Instruments({ http_client: data_http_client });
         this.venues = new Venues({ http_client: data_http_client });
         this.trades = new Trades({ http_client: data_http_client });
+        this.ohlc = new OHLC({ http_client: data_http_client });
 
         this.realtime = new Realtime({ http_client: realtime_http_client });
     }

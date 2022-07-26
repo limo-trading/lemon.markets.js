@@ -35,7 +35,7 @@
 | GET | /instruments | ✅ | ✅ | ❌ |
 | GET | /venues | ✅ | ✅ | ❌ |
 | GET | /quotes/latest | ✅ | ➖ | ❌ |
-| GET | /ohlc/{x1} | ❌ | ❌ | ❌ |
+| GET | /ohlc/{x1} | ✅ | ✅ | ❌ |
 | GET | /trades/latest | ✅ | ➖ | ❌ |
 | <b>Realtime</b> | | | | |
 | POST | /auth | ✅ | ➖ | ❌ |
