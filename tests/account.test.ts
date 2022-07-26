@@ -7,8 +7,9 @@ describe('test account route', () => {
 
     it('should return account', async () => {
         const res = await client.account.get()
-        account = res
         
+        account = res
+
         expect(res).toHaveProperty('account_id')
         expect(res).toHaveProperty('firstname')
         expect(res).toHaveProperty('lastname')
