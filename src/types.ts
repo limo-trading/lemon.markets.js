@@ -54,3 +54,37 @@ export interface Document {
     viewed_first_at: string
     viewed_last_at: string
 }
+
+export type OrderStatus = 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
+
+export interface Order{
+    id: string
+    isin: string
+    isin_title: string
+    expires_at: string
+    created_at: string
+    side: 'buy' | 'sell'
+    quantity: number
+    stop_price: number
+    limit_price: number
+    estimated_price: number
+    estimated_price_total: number
+    venue: string
+    status: OrderStatus
+}
+
+export interface OrderConfirmation {
+    created_at: string
+    id: string
+    status: string
+    isin: string
+    expires_at: string
+    side: 'buy' | 'sell'
+    quantity: number
+    stop_price: number
+    limit_price: number
+    venue: string
+    estimated_price: number
+    charge: number
+    activate: (options: { pin: number }) => Promise<boolean>
+}
