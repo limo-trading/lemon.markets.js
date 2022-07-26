@@ -17,7 +17,7 @@ export default class Cache<T> {
     public getDefault(): T {
         return this.get('default');
     }
-    
+
     public set(key: string, value: T): void {
         this.cache[key] = value;
     }

@@ -22,29 +22,29 @@ type FetchOptions = {
 export default class HttpClient {
 
     private url: string;
-    private auth_token: string;
+    private authToken: string;
 
-    private rate_limit: number = 0;
-    private rate_remaining: number = 10;
-    private rate_reset: number = 0;
+    private rateLimit: number = 0;
+    private rateRemaining: number = 10;
+    private rateReset: number = 0;
 
-    constructor(url: string, auth_token: string) {
+    constructor(url: string, authToken: string) {
         this.url = url;
-        this.auth_token = auth_token;
+        this.authToken = authToken;
     }
 
     private async construct_fetch(url: string, method: FetchMethods, options: FetchOptions) {
 
         // check rate limit
-        if(this.rate_remaining === 0) {
-            const time = this.rate_reset - new Date().getTime();
+        if (this.rateRemaining === 0) {
+            const time = this.rateReset - new Date().getTime();
             // if time is more than 5 seconds, return error
-            if(time > 5000) throw new LemonError('Rate limit exceeded. Try again in ~' + time / 1000 + ' seconds.');
+            if (time > 5000) throw new LemonError('Rate limit exceeded. Try again in ~' + time / 1000 + ' seconds.');
             await awaitNewRateLimit(time);
         }
 
         const headers: HeadersInit = {
-            'Authorization': `Bearer ${this.auth_token}`,
+            'Authorization': `Bearer ${this.authToken}`,
             'Content-Type': 'application/json',
             ...(options?.headers || {})
         };
@@ -53,7 +53,7 @@ export default class HttpClient {
         const body: BodyInit = options?.body ? typeof options.body === 'string' ? options.body : JSON.stringify(options.body) : '';
 
         // construct query string
-        const query: string = options?.query ? `?${Object.keys(options.query).map(key => options.query![key] ? `${key}=${options.query![key]}`: '').join('&')}` : '';
+        const query: string = options?.query ? `?${Object.keys(options.query).map(key => options.query![key] ? `${key}=${options.query![key]}` : '').join('&')}` : '';
 
         const res = await fetch(`${url}${query}`, {
             method,
@@ -61,18 +61,18 @@ export default class HttpClient {
             body: method === 'POST' ? body : undefined
         });
         const data = await res.json();
-        if(res.status !== 200) handleApiError(data);
+        if (res.status !== 200) handleApiError(data);
 
         // update rate limit
-        this.rate_limit = parseInt(res.headers.get('RateLimit-Limit') || '0');
-        this.rate_remaining = parseInt(res.headers.get('RateLimit-Remaining') || '0');
+        this.rateLimit = parseInt(res.headers.get('RateLimit-Limit') || '0', 10);
+        this.rateRemaining = parseInt(res.headers.get('RateLimit-Remaining') || '0', 10);
         // reset time
-        const seconds = parseInt(res.headers.get('RateLimit-Reset') || '0')
-        this.rate_reset = new Date().getTime() + seconds * 1000;
+        const seconds = parseInt(res.headers.get('RateLimit-Reset') || '0', 10)
+        this.rateReset = new Date().getTime() + seconds * 1000;
 
         return await data;
     }
-    
+
     public get(path: string, options?: {}) {
         return this.construct_fetch(`${this.url}${path}`, 'GET', options!);
     }

@@ -31,12 +31,12 @@ export default class Performance extends Client<PerformanceGetResponse> {
 
     public async get(options?: PerformanceGetRequest) {
         return new Promise<ResponsePage<PerformanceGetResponse>>(async resolve => {
-            const response = await this.http_client.get('/positions/performance', { query: options });
-            resolve(new PageBuilder<PerformanceGetResponse>(this.http_client, this.cache_layer).build(response));
+            const response = await this.httpClient.get('/positions/performance', { query: options });
+            resolve(new PageBuilder<PerformanceGetResponse>(this.httpClient, this.cacheLayer).build(response));
         });
     }
 
     public cache() {
-        return this.cache_layer.getAll();
+        return this.cacheLayer.getAll();
     }
 }

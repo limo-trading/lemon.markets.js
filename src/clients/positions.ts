@@ -32,12 +32,12 @@ export default class Positions extends Client<PositionsGetResponse> {
 
     public get(options?:PositionsGetRequest) {
         return new Promise<ResponsePage<PositionsGetResponse>>(async resolve => {
-            const response = await this.http_client.get('/positions', { query: options });
-            resolve(new PageBuilder<PositionsGetResponse>(this.http_client, this.cache_layer).build(response));
+            const response = await this.httpClient.get('/positions', { query: options });
+            resolve(new PageBuilder<PositionsGetResponse>(this.httpClient, this.cacheLayer).build(response));
         })
     }
 
     public cache() {
-        return this.cache_layer.getAll();
+        return this.cacheLayer.getAll();
     }
 }

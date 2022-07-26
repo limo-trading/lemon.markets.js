@@ -19,19 +19,19 @@ interface InstrumentsGetResponse {
 }
 
 export default class Instruments extends Client<InstrumentsGetResponse> {
-    
+
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public get(options: InstrumentsGetRequest) {
         return new Promise<ResponsePage<InstrumentsGetResponse>>(async resolve => {
-            const response = await this.http_client.get('/instruments', { query: options });
-            resolve(new PageBuilder<InstrumentsGetResponse>(this.http_client, this.cache_layer).build(response));
+            const response = await this.httpClient.get('/instruments', { query: options });
+            resolve(new PageBuilder<InstrumentsGetResponse>(this.httpClient, this.cacheLayer).build(response));
         })
     }
 
     public cache() {
-        return this.cache_layer.getAll();
+        return this.cacheLayer.getAll();
     }
 }

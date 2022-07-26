@@ -10,8 +10,8 @@ export default class Quotes extends Client<void> {
 
     public async latest(options: { isin: string, mic?: string }) {
         return new Promise<ResponsePage<LatestQuote>>(async resolve => {
-            const response = await this.http_client.get('/quotes/latest', { query: options });
-            resolve(new PageBuilder<LatestQuote>(this.http_client).build(response));
+            const response = await this.httpClient.get('/quotes/latest', { query: options });
+            resolve(new PageBuilder<LatestQuote>(this.httpClient).build(response));
         })
     }
 }

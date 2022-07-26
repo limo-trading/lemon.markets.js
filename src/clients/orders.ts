@@ -49,10 +49,10 @@ interface OrderGetResponse {
     status: OrderStatus
 }
 
-const activateFunction = async(options: ActivateRequest, id: string, http_client: HttpClient) => {
+const activateFunction = async(options: ActivateRequest, id: string, httpClient: HttpClient) => {
     return new Promise<boolean>(async resolve => {
-        const activate_res = await http_client.post(`/orders/${id}/activate`, { body: options })
-        if(activate_res.status === 'ok') resolve(true);
+        const activateRes = await httpClient.post(`/orders/${id}/activate`, { body: options })
+        if(activateRes.status === 'ok') resolve(true);
         else resolve(false);
     })
 }
@@ -71,21 +71,21 @@ export default class Orders extends Client<OrderGetResponse> {
         venue: string
     }) {
         return new Promise<Order>(async resolve => {
-            const expires_at = options.expires_at instanceof Date ? options.expires_at.toISOString() : 'p1d';
-            const response = await this.http_client.post('/orders', { body: { ...options, expires_at } })
+            const expiresAt = options.expires_at instanceof Date ? options.expires_at.toISOString() : 'p1d';
+            const response = await this.httpClient.post('/orders', { body: { ...options, expiresAt } })
             resolve({
-                activate: (options: ActivateRequest) => activateFunction(options, response.results.id, this.http_client),
+                activate: (activateOptions: ActivateRequest) => activateFunction(activateOptions, response.results.id, this.httpClient),
                 ...response.results,
             });
         })
     }
 
-    private getOne(order_id: string) {
+    private getOne(orderId: string) {
         return new Promise<OrderGetResponse>(async resolve => {
-            const response = await this.http_client.get(`/orders/${order_id}`)
-            this.cache_layer.set(response.results[0].id, response.results)
+            const response = await this.httpClient.get(`/orders/${orderId}`)
+            this.cacheLayer.set(response.results[0].id, response.results)
             resolve({
-                activate: response.results.status === 'inactive' ? (options: ActivateRequest) => activateFunction(options, response.results.id, this.http_client) : undefined,
+                activate: response.results.status === 'inactive' ? (options: ActivateRequest) => activateFunction(options, response.results.id, this.httpClient) : undefined,
                 ...response.results[0],
             })
         })
@@ -94,25 +94,25 @@ export default class Orders extends Client<OrderGetResponse> {
     public get(options?: OrderGetRequest) {
         if(options?.order_id) return this.getOne(options.order_id);
         return new Promise<ResponsePage<OrderGetResponse>>(async resolve => {
-            const response = await this.http_client.get('/orders', { query: options })
+            const response = await this.httpClient.get('/orders', { query: options })
             // add activate method to each inactive order
             const orders = response.results.map((order: OrderGetResponse) => ({
-                activate: order.status === 'inactive' ? (options: ActivateRequest) => activateFunction(options, order.id, this.http_client) : undefined,
+                activate: order.status === 'inactive' ? (activateOptions: ActivateRequest) => activateFunction(activateOptions, order.id, this.httpClient) : undefined,
                 ...order,
             }))
             response.results = orders;
-            resolve(new PageBuilder(this.http_client, this.cache_layer).build(response))
+            resolve(new PageBuilder(this.httpClient, this.cacheLayer).build(response))
         })
     }
 
-    public cancel(order_id: string) {
+    public cancel(orderId: string) {
         return new Promise<boolean>(async resolve => {
-            const response = await this.http_client.delete(`/orders/${order_id}`)
+            const response = await this.httpClient.delete(`/orders/${orderId}`)
             resolve(response.status === 'ok')
         })
     }
 
     public cache() {
-        return this.cache_layer.getAll();
+        return this.cacheLayer.getAll();
     }
 }

@@ -20,13 +20,13 @@ export default class AccountClient extends Client<Account> {
 
     public async get() {
         return new Promise<Account>(async resolve => {
-            const response = await this.http_client.get("/account");
-            this.cache_layer.setDefault(response.results);
+            const response = await this.httpClient.get("/account");
+            this.cacheLayer.setDefault(response.results);
             resolve(response.results);
         });
     }
 
     public cache() {
-        return this.cache_layer.getDefault();
+        return this.cacheLayer.getDefault();
     }
 }

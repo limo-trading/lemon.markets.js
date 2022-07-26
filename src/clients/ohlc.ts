@@ -33,12 +33,12 @@ export default class OHLC extends Client<OHLCGetResponse> {
 
     async get(options: OHLCGetRequest) {
         return new Promise<ResponsePage<OHLCGetResponse>>(async resolve => {
-            const response = await this.http_client.get(`/ohlc/${options.x1}`, { query: options })
-            resolve(new PageBuilder<OHLCGetResponse>(this.http_client, this.cache_layer).build(response))
+            const response = await this.httpClient.get(`/ohlc/${options.x1}`, { query: options })
+            resolve(new PageBuilder<OHLCGetResponse>(this.httpClient, this.cacheLayer).build(response))
         })
     }
 
     async cache() {
-        return this.cache_layer.getAll()
+        return this.cacheLayer.getAll()
     }
 }

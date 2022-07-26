@@ -22,19 +22,19 @@ interface StatementGetResponse {
 }
 
 export default class Statements extends Client<StatementGetResponse> {
-    
+
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public get(options?: StatementGetRequest) {
         return new Promise<ResponsePage<StatementGetResponse>>(async resolve => {
-            const res = await this.http_client.get(`/positions/statements`, { query: options })
-            resolve(new PageBuilder<StatementGetResponse>(this.http_client, this.cache_layer).build(res))
+            const res = await this.httpClient.get(`/positions/statements`, { query: options })
+            resolve(new PageBuilder<StatementGetResponse>(this.httpClient, this.cacheLayer).build(res))
         })
     }
 
     public cache() {
-        return this.cache_layer.getAll();
+        return this.cacheLayer.getAll();
     }
 }

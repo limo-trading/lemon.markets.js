@@ -16,12 +16,12 @@ const errorMessages = {
 export function handleApiError(error: any) {
     if(error.status !== 'error') return;
     switch(error.error_code) {
-        case 'unauthorized': throw new LemonError(errorMessages['unauthorized']);
-        case 'token_invalid': throw new LemonError(errorMessages['token_invalid']);
-        case 'rate_limit_exceeded': throw new LemonError(errorMessages['rate_limit_exceeded']);
-        case 'internal_error': throw new LemonError(errorMessages['internal_error']);
+        case 'unauthorized': throw new LemonError(errorMessages.unauthorized);
+        case 'token_invalid': throw new LemonError(errorMessages.token_invalid);
+        case 'rate_limit_exceeded': throw new LemonError(errorMessages.rate_limit_exceeded);
+        case 'internal_error': throw new LemonError(errorMessages.internal_error);
         default: {
-            if(error.error_code.match(/\w_not_found/)) throw new LemonError(errorMessages['not_found']);
+            if(error.error_code.match(/\w_not_found/)) throw new LemonError(errorMessages.not_found);
             throw new LemonError(error.error_code + ': ' + error.error_message);
         }
     }

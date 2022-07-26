@@ -14,15 +14,15 @@ type trading_mode = 'paper' | 'live';
 
 interface GeneralClientOptions {
     mode: trading_mode;
-    trading_key: string;
-    data_key?: string;
+    tradingKey: string;
+    dataKey?: string;
 }
 
 export default class LemonClient {
 
     private mode:trading_mode;
-    private trading_key:string;
-    private data_key:string;
+    private tradingKey:string;
+    private dataKey:string;
 
     public positions: Positions;
     public quotes: Quotes;
@@ -37,26 +37,26 @@ export default class LemonClient {
     constructor(options:GeneralClientOptions) {
 
         this.mode = options.mode;
-        this.trading_key = options.trading_key;
+        this.tradingKey = options.tradingKey;
 
-        if(this.mode === 'paper') this.data_key = options.trading_key;
-        else if(options.data_key) this.data_key = options.data_key;
+        if(this.mode === 'paper') this.dataKey = options.tradingKey;
+        else if(options.dataKey) this.dataKey = options.dataKey;
         else throw new LemonError('Market data API key is required. Use a paper trading key.');
 
-        const trading_http_client = new HttpClient(`https://${this.mode === 'paper' ? 'paper-' : ''}trading.lemon.markets/v1`, this.trading_key);
-        const data_http_client = new HttpClient(`https://data.lemon.markets/v1`, this.data_key);
-        const realtime_http_client = new HttpClient(`https://realtime.lemon.markets/v1`, this.data_key);
+        const tradingHttpClient = new HttpClient(`https://${this.mode === 'paper' ? 'paper-' : ''}trading.lemon.markets/v1`, this.tradingKey);
+        const dataHttpClient = new HttpClient(`https://data.lemon.markets/v1`, this.dataKey);
+        const realtimeHttpClient = new HttpClient(`https://realtime.lemon.markets/v1`, this.dataKey);
 
-        this.positions = new Positions({ http_client: trading_http_client });
-        this.orders = new Orders({ http_client: trading_http_client });
-        this.account = new Account({ http_client: trading_http_client });
+        this.positions = new Positions({ httpClient: tradingHttpClient });
+        this.orders = new Orders({ httpClient: tradingHttpClient });
+        this.account = new Account({ httpClient: tradingHttpClient });
 
-        this.quotes = new Quotes({ http_client: data_http_client });
-        this.instruments = new Instruments({ http_client: data_http_client });
-        this.venues = new Venues({ http_client: data_http_client });
-        this.trades = new Trades({ http_client: data_http_client });
-        this.ohlc = new OHLC({ http_client: data_http_client });
+        this.quotes = new Quotes({ httpClient: dataHttpClient });
+        this.instruments = new Instruments({ httpClient: dataHttpClient });
+        this.venues = new Venues({ httpClient: dataHttpClient });
+        this.trades = new Trades({ httpClient: dataHttpClient });
+        this.ohlc = new OHLC({ httpClient: dataHttpClient });
 
-        this.realtime = new Realtime({ http_client: realtime_http_client });
+        this.realtime = new Realtime({ httpClient: realtimeHttpClient });
     }
 }

@@ -12,19 +12,19 @@ interface BankStatementsGetRequest {
 }
 
 export default class BankStatements extends Client<BankStatement> {
-    
+
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public get(options?: BankStatementsGetRequest) {
         return new Promise<ResponsePage<BankStatement>>(async resolve => {
-            const response = await this.http_client.get('/account/bankstatements', { query: options });
-            resolve(new PageBuilder(this.http_client, this.cache_layer).build(response));
+            const response = await this.httpClient.get('/account/bankstatements', { query: options });
+            resolve(new PageBuilder(this.httpClient, this.cacheLayer).build(response));
         });
     }
 
     public cache() {
-        return this.cache_layer.getAll();
+        return this.cacheLayer.getAll();
     }
 }

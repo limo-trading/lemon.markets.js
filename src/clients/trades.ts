@@ -17,15 +17,15 @@ interface TradesGetResponse {
 }
 
 export default class Trades extends Client<void> {
-    
+
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public latest(options: TradesGetRequest) {
         return new Promise<ResponsePage<TradesGetResponse>>(async resolve => {
-            const response = await this.http_client.get('/trades/latest', { query: options });
-            resolve(new PageBuilder<TradesGetResponse>(this.http_client).build(response.results));
+            const response = await this.httpClient.get('/trades/latest', { query: options });
+            resolve(new PageBuilder<TradesGetResponse>(this.httpClient).build(response.results));
         })
     }
 }

@@ -22,12 +22,12 @@ export default class Venues extends Client<VenuesGetResponse> {
 
     public get(options?: VenuesGetRequest) {
         return new Promise<ResponsePage<VenuesGetResponse>>(async resolve => {
-            const response = await this.http_client.get('/venues', { query: options });
-            resolve(new PageBuilder<VenuesGetResponse>(this.http_client, this.cache_layer).build(response));
+            const response = await this.httpClient.get('/venues', { query: options });
+            resolve(new PageBuilder<VenuesGetResponse>(this.httpClient, this.cacheLayer).build(response));
         })
     }
 
     public cache() {
-        return this.cache_layer.getAll();
+        return this.cacheLayer.getAll();
     }
 }

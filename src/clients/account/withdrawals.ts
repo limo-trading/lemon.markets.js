@@ -21,20 +21,20 @@ export default class WithdrawalsClinet extends Client<Withdrawal> {
 
     public async get(options?: WithdrawalsGetRequest) {
         return new Promise<ResponsePage<Withdrawal>>(async resolve => {
-            const response = await this.http_client.get("/account/withdrawals", { query: options });
-            resolve(new PageBuilder<Withdrawal>(this.http_client, this.cache_layer).build(response));
+            const response = await this.httpClient.get("/account/withdrawals", { query: options });
+            resolve(new PageBuilder<Withdrawal>(this.httpClient, this.cacheLayer).build(response));
         });
     }
 
     public async create(options: WithdrawalsCreateRequest) {
         return new Promise<boolean>(async resolve => {
-            const response = await this.http_client.post("/account/withdrawals", { body: options });
+            const response = await this.httpClient.post("/account/withdrawals", { body: options });
             if(response.status === 'ok') resolve(true);
             else resolve(false);
         });
     }
 
     public cache() {
-        return this.cache_layer.getAll();
+        return this.cacheLayer.getAll();
     }
 }
