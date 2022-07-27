@@ -7,6 +7,14 @@ interface ActivateRequest {
     pin: number
 }
 
+interface OrderCreateRequest {
+    isin: string
+    quantity: number
+    expires_at?: 'day' | Date
+    side: 'buy' | 'sell'
+    venue: string
+}
+
 interface OrderGetRequest {
     from?: string
     to?: string
@@ -30,13 +38,7 @@ export default class OrdersClient extends Client<Order> {
         super(options);
     }
 
-    public async create(options: {
-        isin: string
-        quantity: number
-        expires_at?: 'day' | Date
-        side: 'buy' | 'sell'
-        venue: string
-    }) {
+    public async create(options: OrderCreateRequest) {
         return new Promise<OrderConfirmation>(async resolve => {
             const expiresAt = options.expires_at instanceof Date ? options.expires_at.toISOString() : 'p1d';
             const response = await this.httpClient.post('/orders', { body: { ...options, expiresAt } })
