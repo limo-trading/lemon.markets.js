@@ -76,7 +76,7 @@ export interface Order {
 export interface OrderConfirmation {
     created_at: string
     id: string
-    status: string
+    status: OrderStatus
     isin: string
     expires_at: string
     side: 'buy' | 'sell'
