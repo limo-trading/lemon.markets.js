@@ -79,10 +79,10 @@ const account: Account = client.account.cache()
 
 | Name | Type | Description |
 | - | - | - |
-| id | string | |
-| amount | string | |
-| created_at | string | |
-| idempotency | string | |
+| id? | string | |
+| amount? | string | |
+| created_at? | string | |
+| idempotency? | string | |
 
 Get
 <br/>
