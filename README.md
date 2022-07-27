@@ -29,6 +29,8 @@ const client = new lemon.Client({
         * [Withdrawal](#Withdrawal)
         * [Bankstatement](#BankStatement)
         * [Document](#Document)
+    * [Order](#Order)
+        * [OrderConfirmation](#OrderConfirmation)
 
 ---
 ## ResponsePage
@@ -173,4 +175,106 @@ const documents: Document[] = page.values
 Cache
 ```ts
 const documents: Document[] = client.account.documents.cache()
+```
+
+---
+### Order
+
+| Name | Type | Description |
+| - | - | - |
+| id | string | |
+| isin | string | |
+| isin_title | string | |
+| expires_at | string | |
+| created_at | string | |
+| side | 'buy' \| 'sell' | |
+| quantity | number | |
+| stop_price | number | |
+| limit_price | number | |
+| estimated_price | number | |
+| estimated_price_total | number | |
+| venue | string | |
+| status | 'inactive' \| 'active' \| 'open' \| 'in_progress' \| 'canceling' \| 'executed' \| 'canceled' \| 'expired' | |
+| activate? | (options: { pin: number }) => Promise\<boolean\> | only if your order is inactive |
+
+Create <br/>
+<b>Params</b>
+
+Get <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| from? | string | |
+| to? | string | |
+| isin? | string | |
+| side? | 'buy' \| 'sell' | |
+| status? | 'inactive' \| 'active' \| 'open' \| 'in_progress' \| 'canceling' \| 'executed' \| 'canceled' \| 'expired' | |
+
+```ts
+const page: ResponsePage<Order> = await client.orders.get()
+const orders: Order[] = page.values
+```
+
+Get one <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| orderId | string | |
+
+```ts
+const order: Order = await client.orders.getOne('order-id')
+```
+
+Cancel <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| orderId | string | |
+
+```ts
+const canceled: boolean = await client.orders.cancel('order-id')
+```
+
+Create <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| isin | string | |
+| quantity | number | |
+| side | 'buy' \| 'sell' | |
+| venue | string | |
+| expires_at? | 'day' \| Date | Default: 'day' |
+
+```ts
+const confirmation: OrderConfirmation = await client.orders.create({
+    isin: 'US0378331005',
+    side: 'buy',
+    quantity: 10,
+    venue: 'allday'
+})
+```
+
+---
+### OrderConfirmation
+| Name | Type | Description |
+| - | - | - |
+| created_at | string | |
+| id | string | |
+| status | 'inactive' \| 'active' \| 'open' \| 'in_progress' \| 'canceling' \| 'executed' \| 'canceled' \| 'expired' | |
+| isin | string | |
+| expires_at | string | |
+| side | 'buy' \| 'sell' | |
+| quantity | number | |
+| stop_price | number | |
+| limit_price | number | |
+| venue | string | |
+| estimated_price | number | |
+| charge | number | |
+| activate | (options: { pin: number }) => Promise\<boolean\> | | 
+
+Activate order
+```ts
+let confirmation: OrderConfirmation;
+// create order ...
+const activated: boolean = confirmation.activate({ pin: 1234 })
 ```
