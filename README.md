@@ -1,11 +1,16 @@
 # lemon.markets.js
 
+This is a Javascript/Typescript SDK for the [lemon.markets](https://lemon.markets/] API.
+
 ## Versions
 | sdk version | api version |
 | - | - |
 | 1.x | v1 |
 
 ## Getting started
+
+### Get API Access
+Follow the instructions on [lemon.markets](https://docs.lemon.markets/quickstart#getting-access).
 
 ### Install sdk
 ```sh
