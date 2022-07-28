@@ -1,6 +1,6 @@
 import HttpClient from "./http_client"
 import Cache from "./cache"
-import { ResponsePage } from "./types";
+import { Quote, ResponsePage } from "./types";
 
 export class PageBuilder<T> {
 
@@ -12,14 +12,20 @@ export class PageBuilder<T> {
         this.cacheLayer = cacheLayer;
     }
 
-    public build(res: any, useId?: string | ((data: T) => string)): ResponsePage<T> {
+    public build(options: {res: any, useId?: string | ((data: T) => string), override?: (data: any) => T}): ResponsePage<T> {
+        
+        const { res, useId, override } = options;
+
+        const values: T[] = override ? res.results.map((value: any) => override(value)) : res.results;
+        
         // cache
         if (this.cacheLayer) {
             // @ts-ignore
-            res.results.forEach(element => {
+            values.forEach(element => {
                 if(useId && typeof useId !== 'string') {
                     this.cacheLayer!.set(useId(element), element);
                 }else {
+                    // @ts-ignore
                     this.cacheLayer!.set(useId ? element[useId] : element.id, element);
                 }
             });
@@ -33,7 +39,11 @@ export class PageBuilder<T> {
                 if (res.previous) {
                     return new Promise<ResponsePage<T>>(async resolve => {
                         const externalRes = await this.httpClient.external_fetch(res.previous)
-                        resolve(new PageBuilder<T>(this.httpClient, this.cacheLayer).build(externalRes, useId));
+                        resolve(new PageBuilder<T>(this.httpClient, this.cacheLayer).build({
+                            res: externalRes,
+                            useId,
+                            override
+                        }))
                     })
                 }
                 throw new Error('No previous page')
@@ -42,12 +52,16 @@ export class PageBuilder<T> {
                 if (res.next) {
                     return new Promise<ResponsePage<T>>(async resolve => {
                         const externalRes = await this.httpClient.external_fetch(res.next)
-                        resolve(new PageBuilder<T>(this.httpClient, this.cacheLayer).build(externalRes, useId));
+                        resolve(new PageBuilder<T>(this.httpClient, this.cacheLayer).build({
+                            res: externalRes,
+                            useId,
+                            override
+                        }));
                     })
                 }
                 throw new Error('No next page')
             },
-            values: res.results,
+            values: values,
         }
     }
 }

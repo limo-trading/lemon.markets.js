@@ -2,11 +2,13 @@ import Client, { ClientOptions } from "../client";
 import * as Ably from 'ably';
 import Cache from '../cache';
 import { Quote, RealtimeSubscription } from "../types";
+import { convertDate, convertNumber } from "../number_dates";
 
-interface RealtimeSubscribeRequest {
+interface RealtimeSubscribeParams {
     isin: string | string[]
     callback: (data: Quote) => void
     allowOutOfOrder?: boolean
+    decimals?: boolean
 }
 
 interface RealtimeAuthResponse {
@@ -15,7 +17,7 @@ interface RealtimeAuthResponse {
     user_id: string
 }
 
-export default class Realtime extends Client<Quote> {
+export default class RealtimeClient extends Client<Quote> {
 
     private authCache: Cache<RealtimeAuthResponse>;
     private connectionCache: Cache<Ably.Realtime>;
@@ -39,8 +41,10 @@ export default class Realtime extends Client<Quote> {
         })
     }
 
-    public subscribe(options: RealtimeSubscribeRequest) {
+    public subscribe(options: RealtimeSubscribeParams) {
         return new Promise<RealtimeSubscription>(async (resolve, reject) => {
+
+            const decimals = options.decimals ?? false;
 
             const auth = this.authCache.getDefault()
                 ? this.authCache.getDefault().expires_at < Date.now()
@@ -62,13 +66,21 @@ export default class Realtime extends Client<Quote> {
                 const { name, data } = message;
                 switch (name) {
                     case 'quotes':
-                        if (options.allowOutOfOrder) return options.callback(data);
+
+                        const quote: Quote = {
+                            ...data,
+                            a: convertNumber(data.a, decimals),
+                            b: convertNumber(data.b, decimals),
+                            t: convertDate(data.t),
+                        }
+
+                        if (options.allowOutOfOrder) return options.callback(quote);
 
                         // check if quote is newer than last quote
-                        const lastQuote = this.cacheLayer.get(data.isin) || {};
-                        if (new Date(lastQuote.t || 0).getTime() < new Date(data.t).getTime()) {
-                            this.cacheLayer.set(data.isin, data);
-                            options.callback(data);
+                        const lastQuote = this.cacheLayer.get(quote.isin) || {};
+                        if (lastQuote.t?.getTime() < quote.t.getTime()) {
+                            this.cacheLayer.set(quote.isin, quote);
+                            options.callback(quote);
                         }
                         break;
                     default:

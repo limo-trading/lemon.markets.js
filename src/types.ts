@@ -20,15 +20,15 @@ export interface Quote {
     a_v: number
     b: number
     a: number
-    t: string
+    t: Date
     mic: string
 }
 
 export interface Withdrawal {
     id: string
     amount: string
-    created_at: string
-    date: string
+    created_at: Date
+    date: Date
     idempotency: string
 }
 
@@ -38,21 +38,21 @@ export interface BankStatement {
     id: string
     account_id: string
     type: BankStatementType
-    date: string
+    date: Date
     amount: number
     isin: string
     isin_title: string
-    created_at: string
+    created_at: Date
 }
 
 export interface Document {
     id: string
     name: string
-    created_at: string
+    created_at: Date
     category: string
     link: string
-    viewed_first_at: string
-    viewed_last_at: string
+    viewed_first_at: Date
+    viewed_last_at: Date
 }
 
 export type OrderStatus = 'inactive' | 'active' | 'open' | 'in_progress' | 'canceling' | 'executed' | 'canceled' | 'expired'
@@ -61,8 +61,8 @@ export interface Order {
     id: string
     isin: string
     isin_title: string
-    expires_at: string
-    created_at: string
+    expires_at: Date
+    created_at: Date
     side: 'buy' | 'sell'
     quantity: number
     stop_price: number
@@ -74,11 +74,11 @@ export interface Order {
 }
 
 export interface OrderConfirmation {
-    created_at: string
+    created_at: Date
     id: string
     status: OrderStatus
     isin: string
-    expires_at: string
+    expires_at: Date
     side: 'buy' | 'sell'
     quantity: number
     stop_price: number
@@ -108,8 +108,8 @@ export interface Statement {
     quantity: string
     isin: string
     isin_title: string
-    date: string
-    created_at: string
+    date: Date
+    created_at: Date
 }
 
 export interface Performance {
@@ -120,8 +120,8 @@ export interface Performance {
     quantity_bought: number
     quantity_sold: number
     quantity_open: number
-    opened_at: string
-    closed_at: string
+    opened_at: Date
+    closed_at: Date
     fees: number
 }
 
@@ -147,7 +147,7 @@ export interface Trade {
     isin: string
     p: number
     v: number
-    t: string
+    t: Date
     mic: string
 }
 
@@ -159,7 +159,7 @@ export interface OHLC {
     c: number
     v: number
     pbv: number
-    t: string
+    t: Date
     mic: string
 }
 

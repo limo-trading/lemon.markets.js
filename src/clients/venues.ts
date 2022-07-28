@@ -2,7 +2,7 @@ import Client, { ClientOptions } from "../client";
 import { PageBuilder } from "../response_page";
 import { Venue, ResponsePage } from "../types";
 
-interface VenuesGetRequest {
+interface VenuesGetParams {
     mic?: string
     limit?: number
     page?: number
@@ -14,10 +14,14 @@ export default class VenuesClient extends Client<Venue> {
         super(options);
     }
 
-    public get(options?: VenuesGetRequest) {
+    public get(options?: VenuesGetParams) {
         return new Promise<ResponsePage<Venue>>(async resolve => {
             const response = await this.httpClient.get('/venues', { query: options });
-            resolve(new PageBuilder<Venue>(this.httpClient, this.cacheLayer).build(response, 'mic'));
+            resolve(new PageBuilder<Venue>(this.httpClient, this.cacheLayer)
+            .build({
+                res: response,
+                useId: 'mic'
+            }));
         })
     }
 
