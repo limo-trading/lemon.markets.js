@@ -124,7 +124,12 @@ If you request too much data, your answer will be split into multiple pages.
 | amount_open_withdrawals | number | |
 | amount_estimate_taxes | number | |
 
-Get
+Get <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| decimals? | boolean | Default: true |
+
 ```ts
 const account: Account = await client.account.get()
 ```
@@ -139,9 +144,10 @@ const account: Account = client.account.cache()
 
 | Name | Type | Description |
 | - | - | - |
-| id? | string | |
-| amount? | string | |
-| created_at? | string | |
+| id | string | |
+| amount | string | |
+| created_at | Date | |
+| date | Date | |
 | idempotency? | string | |
 
 Get
@@ -183,11 +189,11 @@ const result: boolean = await client.account.withdrawals.create({ amount: 10, pi
 | id | string | |
 | account_id | string | |
 | type | 'pay_in' \| 'pay_out' \| 'order_buy' \| 'order_sell' \| 'eod_balance' \| 'dividend' \| 'tax_refunded' | |
-| date | string | |
+| date | Date | |
 | amount | number | |
 | isin | string | |
 | isin_title | string | |
-| created_at | string | |
+| created_at | Date | |
 
 Get
 <br/>
@@ -218,11 +224,11 @@ const bankstatements: BankStatement[] = client.account.bankstatements.cache()
 | - | - | - |
 | id | string | |
 | name | string | |
-| created_at | string | |
+| created_at | Date | |
 | category | string | |
 | link | string | |
-| viewed_first_at | string | |
-| viewed_last_at | string | |
+| viewed_first_at | Date | |
+| viewed_last_at | Date | |
 
 Get
 ```ts
@@ -243,8 +249,8 @@ const documents: Document[] = client.account.documents.cache()
 | id | string | |
 | isin | string | |
 | isin_title | string | |
-| expires_at | string | |
-| created_at | string | |
+| expires_at | Date | |
+| created_at | Date | |
 | side | 'buy' \| 'sell' | |
 | quantity | number | |
 | stop_price | number | |
@@ -267,6 +273,7 @@ Get <br/>
 | isin? | string | |
 | side? | 'buy' \| 'sell' | |
 | status? | 'inactive' \| 'active' \| 'open' \| 'in_progress' \| 'canceling' \| 'executed' \| 'canceled' \| 'expired' | |
+| decimals? | boolean | Default: true |
 
 ```ts
 const page: ResponsePage<Order> = await client.orders.get()
@@ -278,6 +285,7 @@ Get one <br/>
 | Name | Type | Description |
 | - | - | - |
 | orderId | string | |
+| decimals? | boolean | Default: true |
 
 ```ts
 const order: Order = await client.orders.getOne('order-id')
@@ -302,6 +310,7 @@ Create <br/>
 | side | 'buy' \| 'sell' | |
 | venue | string | |
 | expires_at? | 'day' \| Date | Default: 'day' |
+| decimals? | boolean | Default: true |
 
 ```ts
 const confirmation: OrderConfirmation = await client.orders.create({
@@ -316,11 +325,11 @@ const confirmation: OrderConfirmation = await client.orders.create({
 ### OrderConfirmation
 | Name | Type | Description |
 | - | - | - |
-| created_at | string | |
+| created_at | Date | |
 | id | string | |
 | status | 'inactive' \| 'active' \| 'open' \| 'in_progress' \| 'canceling' \| 'executed' \| 'canceled' \| 'expired' | |
 | isin | string | |
-| expires_at | string | |
+| expires_at | Date | |
 | side | 'buy' \| 'sell' | |
 | quantity | number | |
 | stop_price | number | |
@@ -356,6 +365,7 @@ Get <br/>
 | isin? | string | |
 | limit? | number | |
 | page? | number | |
+| decimals? | boolean | Default: true |
 
 ```ts
 const page: ResponsePage<Position> = await client.positions.get()
@@ -380,8 +390,8 @@ const positions: Position[] = client.positions.cache()
 | quantity | number | |
 | isin | string | |
 | isin_title | string | |
-| date | string | |
-| created_at | string | |
+| date | Date | |
+| created_at | Date | |
 
 Get <br/>
 <b>Params</b>
@@ -414,8 +424,8 @@ const statements: Statement[] = client.positions.statements.cache()
 | quantity_bought | number | |
 | quantity_sold | number | |
 | quantity_open | number | |
-| opened_at | string | |
-| closed_at | string | |
+| opened_at | Date | |
+| closed_at | Date | |
 | fees | number | |
 
 Get <br/>
@@ -428,6 +438,7 @@ Get <br/>
 | sorting? | 'asc' \| 'desc' | |
 | limit? | number | |
 | page? | number | |
+| decimals? | boolean | Default: true |
 
 ```ts
 const page: ResponsePage<Performance> = await client.positions.performances.get()
@@ -513,7 +524,7 @@ const venues: Venue[] = client.venues.cache()
 | a_v | number | |
 | b | number | |
 | a | number | |
-| t | number | |
+| t | Date | |
 | mic | string | |
 
 Latest <br/>
@@ -522,6 +533,7 @@ Latest <br/>
 | - | - | - |
 | isin | string \| string[] | |
 | mic? | string | |
+| decimals? | boolean | Default: true |
 
 ```ts
 const page: ResponsePage<Quote> = await client.quotes.latest({
@@ -542,7 +554,7 @@ const quotes: Quote[] = page.values
 | c | number | |
 | v | number | |
 | pbv | number | |
-| t | number | |
+| t | Date | |
 | mic | string | |
 
 Get <br/>
@@ -554,8 +566,7 @@ Get <br/>
 | mic? | string | |
 | from? | string | |
 | to? | string | |
-| decimals? | boolean | |
-| epoch? | boolean | |
+| decimals? | boolean | Default: true |
 
 ```ts
 const page: ResponsePage<OHLC> = await client.ohlc.get({
@@ -579,7 +590,7 @@ const ohlc: OHLC[] = client.ohlc.cache()
 | isin | string | |
 | p | number | |
 | v | number | |
-| t | number | |
+| t | Date | |
 | mic | string | |
 
 Latest <br/>
@@ -588,8 +599,7 @@ Latest <br/>
 | - | - | - |
 | isin | string \| string[] | |
 | mic? | string | |
-| decimals? | boolean | |
-| epoch? | boolean | |
+| decimals? | boolean | Default: true |
 
 ```ts
 const page: ResponsePage<Trade> = await client.trades.latest({
