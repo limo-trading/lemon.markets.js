@@ -9,14 +9,13 @@
     "build": "tsc",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
+    "prepublishOnly": "npm run lint",
     "preversion": "npm run lint"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/limo-trading/lemon.markets.js.git"
   },
-  "author": "Tom Heidenreich",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/limo-trading/lemon.markets.js/issues"
