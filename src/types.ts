@@ -98,6 +98,20 @@ export interface Position {
     estimated_price: number
 }
 
+export type StatementType = 'order_buy' | 'order_sell' | 'split' | 'import' | 'snx'
+
+export interface Statement {
+    id: string
+    order_id: string
+    external_id: string
+    type: StatementType
+    quantity: string
+    isin: string
+    isin_title: string
+    date: string
+    created_at: string
+}
+
 export type InstrumentType = 'stock' | 'etf'
 
 export interface Instrument {

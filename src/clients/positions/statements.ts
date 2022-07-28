@@ -1,8 +1,6 @@
 import Client, { ClientOptions } from "../../client";
 import { PageBuilder } from "../../response_page";
-import { ResponsePage } from "../../types";
-
-type StatementType = 'order_buy' | 'order_sell' | 'split' | 'import' | 'snx'
+import { ResponsePage, Statement, StatementType } from "../../types";
 
 interface StatementGetRequest {
     type?: StatementType
@@ -10,28 +8,16 @@ interface StatementGetRequest {
     page?: number
 }
 
-interface StatementGetResponse {
-    id: string
-    order_id: string
-    external_id: string
-    type: StatementType
-    quantity: string
-    isin: string
-    isin_title: string
-    date: string
-    created_at: string
-}
-
-export default class Statements extends Client<StatementGetResponse> {
+export default class Statements extends Client<Statement> {
 
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public get(options?: StatementGetRequest) {
-        return new Promise<ResponsePage<StatementGetResponse>>(async resolve => {
+        return new Promise<ResponsePage<Statement>>(async resolve => {
             const res = await this.httpClient.get(`/positions/statements`, { query: options })
-            resolve(new PageBuilder<StatementGetResponse>(this.httpClient, this.cacheLayer).build(res))
+            resolve(new PageBuilder<Statement>(this.httpClient, this.cacheLayer).build(res))
         })
     }
 
