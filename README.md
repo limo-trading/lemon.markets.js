@@ -31,6 +31,14 @@ const client = new lemon.Client({
         * [Document](#Document)
     * [Order](#Order)
         * [OrderConfirmation](#OrderConfirmation)
+    * [Position](#Position)
+        * [Statement](#Statement)
+        * [Performance](#Performance)
+* [Market Data](#MarketData)
+    * [Instrument](#Instrument)
+    * [Venue](#Venue)
+
+    
 
 ---
 ## ResponsePage
@@ -45,6 +53,7 @@ If you request too much data, your answer will be split into multiple pages.
 | next | () => Promise\<ResponsePage\<T\>\> | |
 | values | T[] | |
 
+---
 ## Trading
 
 ---
@@ -277,4 +286,292 @@ Activate order
 let confirmation: OrderConfirmation;
 // create order ...
 const activated: boolean = confirmation.activate({ pin: 1234 })
+```
+
+---
+### Position
+
+| Name | Type | Description |
+| - | - | - |
+| isin | string | |
+| isin_title | string | |
+| quantity | number | |
+| buy_price_avg | number | |
+| estimated_price_total | number | |
+| estimated_price | number | |
+
+Get <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| isin? | string | |
+| limit? | number | |
+| page? | number | |
+
+```ts
+const page: ResponsePage<Position> = await client.positions.get()
+const positions: Position[] = page.values
+```
+
+Cache <br/>
+
+```ts
+const positions: Position[] = client.positions.cache()
+```
+
+---
+### Statement
+
+| Name | Type | Description |
+| - | - | - |
+| id | string | |
+| order_id | string | |
+| external_id | string | |
+| type | 'order_buy' \| 'order_sell' \| 'split' \| 'import' \| 'snx' | |
+| quantity | number | |
+| isin | string | |
+| isin_title | string | |
+| date | string | |
+| created_at | string | |
+
+Get <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| type? | 'order_buy' \| 'order_sell' \| 'split' \| 'import' \| 'snx' | |
+| limit? | number | |
+| page? | number | |
+
+```ts
+const page: ResponsePage<Statement> = await client.positions.statements.get()
+const statements: Statement[] = page.values
+```
+
+Cache <br/>
+
+```ts
+const statements: Statement[] = client.positions.statements.cache()
+```
+
+---
+### Performance
+
+| Name | Type | Description |
+| - | - | - |
+| isin | string | |
+| isin_title | string | |
+| profit | number | |
+| loss | number | |
+| quantity_bought | number | |
+| quantity_sold | number | |
+| quantity_open | number | |
+| opened_at | string | |
+| closed_at | string | |
+| fees | number | |
+
+Get <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| isin? | string | |
+| from? | string | |
+| to? | string | |
+| sorting? | 'asc' \| 'desc' | |
+| limit? | number | |
+| page? | number | |
+
+```ts
+const page: ResponsePage<Performance> = await client.positions.performances.get()
+const performances: Performance[] = page.values
+```
+
+Cache <br/>
+
+```ts
+const performances: Performance[] = client.positions.performances.cache()
+```
+
+---
+## MarketData
+
+---
+### Instrument
+
+| Name | Type | Description |
+| - | - | - |
+| isin | string | |
+| wkn | string | |
+| name | string | |
+| title | string | |
+| symbol | string | |
+| type | 'stock' \| 'etf' | |
+
+Get <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| isin? | string \| string[] | |
+| search? | string | |
+| type? | 'stock' \| 'etf' | |
+
+```ts
+const page: ResponsePage<Instrument> = await client.instruments.get()
+const instruments: Instrument[] = page.values
+```
+
+Cache <br/>
+
+```ts
+const instruments: Instrument[] = client.instruments.cache()
+```
+
+---
+### Venue
+
+| Name | Type | Description |
+| - | - | - |
+| name | string | |
+| title | string | |
+| mic | string | |
+| is_open | boolean | |
+
+Get <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| mic? | string | |
+| limit? | number | |
+| page? | number | |
+
+```ts
+const page: ResponsePage<Venue> = await client.venues.get()
+const venues: Venue[] = page.values
+```
+
+Cache <br/>
+
+```ts
+const venues: Venue[] = client.venues.cache()
+```
+
+---
+### Quote
+
+| Name | Type | Description |
+| - | - | - |
+| isin | string | |
+| b_v | number | |
+| a_v | number | |
+| b | number | |
+| a | number | |
+| t | number | |
+| mic | string | |
+
+Latest <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| isin | string \| string[] | |
+| mic? | string | |
+
+```ts
+const page: ResponsePage<Quote> = await client.quotes.latest({
+    isin: 'US0378331005'
+})
+const quotes: Quote[] = page.values
+```
+
+---
+### OHLC
+
+| Name | Type | Description |
+| - | - | - |
+| isin | string | |
+| o | number | |
+| h | number | |
+| l | number | |
+| c | number | |
+| v | number | |
+| pbv | number | |
+| t | number | |
+| mic | string | |
+
+Get <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| x1 | 'm1' \| 'h1' \| 'd1' | |
+| isin | string \| string[] | |
+| mic? | string | |
+| from? | string | |
+| to? | string | |
+| decimals? | boolean | |
+| epoch? | boolean | |
+
+```ts
+const page: ResponsePage<OHLC> = await client.ohlc.get({
+    x1: 'm1',
+    isin: 'US0378331005'
+})
+const ohlc: OHLC[] = page.values
+```
+
+Cache <br/>
+
+```ts
+const ohlc: OHLC[] = client.ohlc.cache()
+```
+
+---
+### Trade
+
+| Name | Type | Description |
+| - | - | - |
+| isin | string | |
+| p | number | |
+| v | number | |
+| t | number | |
+| mic | string | |
+
+Latest <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| isin | string \| string[] | |
+| mic? | string | |
+| decimals? | boolean | |
+| epoch? | boolean | |
+
+```ts
+const page: ResponsePage<Trade> = await client.trades.latest({
+    isin: 'US0378331005',
+})
+const trades: Trade[] = page.values
+```
+
+---
+## Realtime
+
+---
+### RealtimeSubscription
+
+| Name | Type | Description |
+| - | - | - |
+| close | () => void | |
+
+Subscribe <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| isin | string \| string[] | |
+| callback | (data: Quote) => void | |
+| allowOutOfOrder? | boolean | Default: false |
+
+```ts
+const subscription: RealtimeSubscription = await client.realtime.subscribe({
+    isin: 'US0378331005',
+    callback: (data: Quote) => {
+        console.log(data)
+    }
+})
 ```
