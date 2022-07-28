@@ -27,6 +27,11 @@ const client = new lemon.Client({
 })
 ```
 
+If you want to use `require`
+```js
+const lemon = require('lemon.markets.js').default;
+```
+
 # Documentation
 
 * [Examples](#Examples)
