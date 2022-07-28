@@ -24,6 +24,7 @@ const client = new lemon.Client({
 
 # Documentation
 
+* [Examples](#Examples)
 * [Trading](#Trading)
     * [Account](#Account)
         * [Withdrawal](#Withdrawal)
@@ -37,8 +38,46 @@ const client = new lemon.Client({
 * [Market Data](#MarketData)
     * [Instrument](#Instrument)
     * [Venue](#Venue)
+    * [Quote](#Quote)
+    * [OHLC](#OHLC)
+    * [Trade](#Trade)
+* [Realtime](#Realtime)
+    * [RealtimeSubscription](#RealtimeSubscription)
 
-    
+## Examples
+
+### List your positions with latest quote
+```ts
+async function main() {
+    const positionsPage = await client.positions.get()
+    const positions = positionsPage.values
+
+    positions.forEach(async position => {
+        const quote = (await client.quotes.latest({ isin: position.isin })).values[0]
+        console.log(`${position.isin_title} @ ${quote.b}/${quote.a}`)
+    })
+}
+
+main()
+```
+
+### Subscribe to realtime data
+```ts
+async function main() {
+    const subscription = await client.realtime.subscribe({
+        isin: 'US0378331005',
+        callback: (data) => {
+            console.log((data.a/10000).toFixed(2));
+        }
+    });
+    // close subscription after 10 seconds
+    setTimeout(() => {
+        subscription.close();
+    }, 10000);
+}
+
+main()
+```
 
 ---
 ## ResponsePage
