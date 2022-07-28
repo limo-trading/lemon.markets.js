@@ -112,6 +112,19 @@ export interface Statement {
     created_at: string
 }
 
+export interface Performance {
+    isin: string
+    isin_title: string
+    profit: number
+    loss: number
+    quantity_bought: number
+    quantity_sold: number
+    quantity_open: number
+    opened_at: string
+    closed_at: string
+    fees: number
+}
+
 export type InstrumentType = 'stock' | 'etf'
 
 export interface Instrument {

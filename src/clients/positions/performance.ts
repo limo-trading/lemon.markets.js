@@ -1,6 +1,6 @@
 import Client, { ClientOptions } from "../../client";
 import { PageBuilder } from "../../response_page";
-import { ResponsePage } from "../../types";
+import { ResponsePage, Performance } from "../../types";
 
 interface PerformanceGetRequest {
     isin?: string
@@ -11,29 +11,16 @@ interface PerformanceGetRequest {
     page?: number
 }
 
-interface PerformanceGetResponse {
-    isin: string
-    isin_title: string
-    profit: number
-    loss: number
-    quantity_bought: number
-    quantity_sold: number
-    quantity_open: number
-    opened_at: string
-    closed_at: string
-    fees: number
-}
-
-export default class Performance extends Client<PerformanceGetResponse> {
+export default class PerformanceClient extends Client<Performance> {
 
     constructor(options: ClientOptions) {
         super(options);
     }
 
     public async get(options?: PerformanceGetRequest) {
-        return new Promise<ResponsePage<PerformanceGetResponse>>(async resolve => {
+        return new Promise<ResponsePage<Performance>>(async resolve => {
             const response = await this.httpClient.get('/positions/performance', { query: options });
-            resolve(new PageBuilder<PerformanceGetResponse>(this.httpClient, this.cacheLayer).build(response));
+            resolve(new PageBuilder<Performance>(this.httpClient, this.cacheLayer).build(response));
         });
     }
 
