@@ -1,6 +1,6 @@
 # lemon.markets.js
 
-This is a Javascript/Typescript SDK for the [lemon.markets](https://lemon.markets/] API.
+This is a Javascript/Typescript SDK for the [lemon.markets](https://lemon.markets/) API.
 
 ## Versions
 | sdk version | api version |
