@@ -29,7 +29,7 @@ export default class AccountClient extends Client<Account> {
             this.cacheLayer.setDefault(response.results);
             const account: Account = response.results
 
-            const decimals = options?.decimals ?? false;
+            const decimals = options?.decimals ?? true;
             resolve({
                 ...account,
                 balance: convertNumber(account.balance, decimals),

@@ -28,7 +28,7 @@ export default class PositionsClient extends Client<Position> {
         return new Promise<ResponsePage<Position>>(async resolve => {
             const response = await this.httpClient.get('/positions', { query: options });
             
-            const decimals = options?.decimals ?? false;
+            const decimals = options?.decimals ?? true;
             
             resolve(new PageBuilder<Position>(this.httpClient, this.cacheLayer)
             .build({

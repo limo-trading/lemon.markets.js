@@ -24,7 +24,7 @@ export default class OHLCClient extends Client<OHLC> {
         return new Promise<ResponsePage<OHLC>>(async resolve => {
             if (typeof options.isin !== 'string') options.isin = options.isin.join(',')
 
-            const decimals = options.decimals ?? false
+            const decimals = options.decimals ?? true
             options.decimals = false
 
             const response = await this.httpClient.get(`/ohlc/${options.x1}`, { query: options })

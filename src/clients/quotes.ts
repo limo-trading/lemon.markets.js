@@ -20,7 +20,7 @@ export default class QuotesClient extends Client<void> {
             if (typeof options.isin !== 'string') options.isin = options.isin.join(',')
             const response = await this.httpClient.get('/quotes/latest', { query: options });
 
-            const decimals = options.decimals ?? false;
+            const decimals = options.decimals ?? true;
 
             resolve(new PageBuilder<Quote>(this.httpClient).build({
                 res: response,

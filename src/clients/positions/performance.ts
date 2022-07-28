@@ -23,7 +23,7 @@ export default class PerformanceClient extends Client<Performance> {
         return new Promise<ResponsePage<Performance>>(async resolve => {
             const response = await this.httpClient.get('/positions/performance', { query: options });
             
-            const decimals = options?.decimals ?? false;
+            const decimals = options?.decimals ?? true;
             
             resolve(new PageBuilder<Performance>(this.httpClient, this.cacheLayer)
             .build({

@@ -51,7 +51,7 @@ export default class OrdersClient extends Client<Order> {
             const expiresAt = options.expires_at instanceof Date ? options.expires_at.toISOString() : 'p1d';
             const response = await this.httpClient.post('/orders', { body: { ...options, expiresAt } })
 
-            const decimals = options.decimals ?? false;
+            const decimals = options.decimals ?? true;
 
             resolve({
                 ...response.results,
@@ -71,7 +71,7 @@ export default class OrdersClient extends Client<Order> {
             this.cacheLayer.set(response.results.id, response.results)
             const order = response.results
 
-            const decimals = options.decimals ?? false;
+            const decimals = options.decimals ?? true;
 
             resolve({
                 ...order,
@@ -90,7 +90,7 @@ export default class OrdersClient extends Client<Order> {
         return new Promise<ResponsePage<Order>>(async resolve => {
             const response = await this.httpClient.get('/orders', { query: options })
 
-            const decimals = options?.decimals ?? false;
+            const decimals = options?.decimals ?? true;
             resolve(new PageBuilder(this.httpClient, this.cacheLayer)
             .build({
                 res: response,

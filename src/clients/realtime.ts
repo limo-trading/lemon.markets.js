@@ -44,7 +44,7 @@ export default class RealtimeClient extends Client<Quote> {
     public subscribe(options: RealtimeSubscribeParams) {
         return new Promise<RealtimeSubscription>(async (resolve, reject) => {
 
-            const decimals = options.decimals ?? false;
+            const decimals = options.decimals ?? true;
 
             const auth = this.authCache.getDefault()
                 ? this.authCache.getDefault().expires_at < Date.now()

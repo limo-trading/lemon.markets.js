@@ -18,7 +18,7 @@ export default class TradesClient extends Client<void> {
         return new Promise<ResponsePage<Trade>>(async resolve => {
             if(typeof options.isin !== 'string') options.isin = options.isin.join(',');
 
-            const decimals = options.decimals ?? false
+            const decimals = options.decimals ?? true
             options.decimals = false;
 
             const response = await this.httpClient.get('/trades/latest', { query: options });
