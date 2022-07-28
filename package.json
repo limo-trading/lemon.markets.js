@@ -1,18 +1,22 @@
 {
   "name": "lemon.markets.js",
   "version": "1.0.0",
-  "description": "javascript sdk for lemon.markets",
-  "main": "index.js",
+  "description": "This is a Javascript/Typescript SDK for the lemon.markets API.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/limo-trading/lemon.markets.js.git"
   },
-  "author": "",
+  "author": "Tom Heidenreich",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/limo-trading/lemon.markets.js/issues"
@@ -33,5 +37,9 @@
   "dependencies": {
     "ably": "^1.2.27",
     "node-fetch": "^2.6.7"
-  }
+  },
+  "keywords": [
+    "lemon.markets",
+    "trading"
+  ]
 }
