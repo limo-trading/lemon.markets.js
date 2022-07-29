@@ -24,23 +24,23 @@ export default class PositionsClient extends Client<Position> {
         this.performance = new Performance(options);
     }
 
-    public get(options?:PositionsGetParams) {
+    public get(options?: PositionsGetParams) {
         return new Promise<ResponsePage<Position>>(async resolve => {
             const response = await this.httpClient.get('/positions', { query: options });
-            
+
             const decimals = options?.decimals ?? true;
-            
+
             resolve(new PageBuilder<Position>(this.httpClient, this.cacheLayer)
-            .build({
-                res: response,
-                useId: 'isin',
-                override: (data: any) => ({
-                    ...data,
-                    buy_price_avg: convertNumber(data.buy_price_avg, decimals),
-                    estimated_price_total: convertNumber(data.estimated_price_total, decimals),
-                    estimated_price: convertNumber(data.estimated_price, decimals)
-                })
-            }))
+                .build({
+                    res: response,
+                    useId: 'isin',
+                    override: (data: any) => ({
+                        ...data,
+                        buy_price_avg: convertNumber(data.buy_price_avg, decimals),
+                        estimated_price_total: convertNumber(data.estimated_price_total, decimals),
+                        estimated_price: convertNumber(data.estimated_price, decimals)
+                    })
+                }))
         })
     }
 

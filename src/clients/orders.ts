@@ -81,7 +81,7 @@ export default class OrdersClient extends Client<Order> {
                 limit_price: convertNumber(order.limit_price, decimals),
                 estimated_price: convertNumber(order.estimated_price, decimals),
                 estimated_price_total: convertNumber(order.estimated_price_total, decimals),
-                activate: order.status === 'inactive' ? (options: ActivateParams) => activateFunction(options, order.id, this.httpClient) : undefined,
+                activate: order.status === 'inactive' ? (activateOptions: ActivateParams) => activateFunction(activateOptions, order.id, this.httpClient) : undefined,
             })
         })
     }

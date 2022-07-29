@@ -12,19 +12,19 @@ export class PageBuilder<T> {
         this.cacheLayer = cacheLayer;
     }
 
-    public build(options: {res: any, useId?: string | ((data: T) => string), override?: (data: any) => T}): ResponsePage<T> {
-        
+    public build(options: { res: any, useId?: string | ((data: T) => string), override?: (data: any) => T }): ResponsePage<T> {
+
         const { res, useId, override } = options;
 
         const values: T[] = override ? res.results.map((value: any) => override(value)) : res.results;
-        
+
         // cache
         if (this.cacheLayer) {
             // @ts-ignore
             values.forEach(element => {
-                if(useId && typeof useId !== 'string') {
+                if (useId && typeof useId !== 'string') {
                     this.cacheLayer!.set(useId(element), element);
-                }else {
+                } else {
                     // @ts-ignore
                     this.cacheLayer!.set(useId ? element[useId] : element.id, element);
                 }
@@ -61,7 +61,7 @@ export class PageBuilder<T> {
                 }
                 throw new Error('No next page')
             },
-            values: values,
+            values
         }
     }
 }

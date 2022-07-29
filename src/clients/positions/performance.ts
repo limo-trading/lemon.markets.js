@@ -22,22 +22,22 @@ export default class PerformanceClient extends Client<Performance> {
     public async get(options?: PerformanceGetParams) {
         return new Promise<ResponsePage<Performance>>(async resolve => {
             const response = await this.httpClient.get('/positions/performance', { query: options });
-            
+
             const decimals = options?.decimals ?? true;
-            
+
             resolve(new PageBuilder<Performance>(this.httpClient, this.cacheLayer)
-            .build({
-                res: response,
-                useId: 'isin',
-                override: (data: any) => ({
-                    ...data,
-                    profit: convertNumber(data.profit, decimals),
-                    loss: convertNumber(data.loss, decimals),
-                    opened_at: convertDate(data.opened_at),
-                    closed_at: convertDate(data.closed_at),
-                    fees: convertNumber(data.fees, decimals),
-                })
-            }));
+                .build({
+                    res: response,
+                    useId: 'isin',
+                    override: (data: any) => ({
+                        ...data,
+                        profit: convertNumber(data.profit, decimals),
+                        loss: convertNumber(data.loss, decimals),
+                        opened_at: convertDate(data.opened_at),
+                        closed_at: convertDate(data.closed_at),
+                        fees: convertNumber(data.fees, decimals),
+                    })
+                }));
         });
     }
 
