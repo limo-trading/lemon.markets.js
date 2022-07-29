@@ -18,9 +18,11 @@ export default class QuotesClient extends Client<void> {
     public async latest(options: QuoteGetParams) {
         return new Promise<ResponsePage<Quote>>(async resolve => {
             if (typeof options.isin !== 'string') options.isin = options.isin.join(',')
-            const response = await this.httpClient.get('/quotes/latest', { query: options });
 
             const decimals = options.decimals ?? true;
+            options.decimals = false
+
+            const response = await this.httpClient.get('/quotes/latest', { query: options });
 
             resolve(new PageBuilder<Quote>(this.httpClient).build({
                 res: response,
