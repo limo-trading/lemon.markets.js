@@ -22,7 +22,12 @@ export default class InstrumentsClient extends Client<Instrument> {
 
     public search(options: InstrumentsSearchParams) {
         return new Promise<ResponsePage<Instrument>>(async resolve => {
-            const response = await this.httpClient.get('/instruments', { query: options });
+            const response = await this.httpClient.get('/instruments', {
+                query: {
+                    ...options,
+                    search: options.query,
+                }
+            });
             resolve(new PageBuilder<Instrument>(this.httpClient, this.cacheLayer)
             .build({
                 res: response
