@@ -471,13 +471,19 @@ Get <br/>
 | Name | Type | Description |
 | - | - | - |
 | isin? | string \| string[] | |
-| search? | string | |
-| type? | 'stock' \| 'etf' | |
+| type? | 'stock' \| 'etf' \| string | not all types are mentioned in the lemon.markets docs |
 
 ```ts
 const page: ResponsePage<Instrument> = await client.instruments.get()
 const instruments: Instrument[] = page.values
 ```
+
+Search <br/>
+<b>Params</b>
+| Name | Type | Description |
+| - | - | - |
+| query | string | |
+| type? | 'stock' \| 'etf' \| string | not all types are mentioned in the lemon.markets docs |
 
 Cache <br/>
 
