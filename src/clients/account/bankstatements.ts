@@ -1,8 +1,9 @@
 import Client, { ClientOptions } from "../../client";
+import { convertDate } from "../../number_dates";
 import { PageBuilder } from "../../response_page";
 import { BankStatement, BankStatementType, ResponsePage } from "../../types";
 
-interface BankStatementsGetRequest {
+interface BankStatementsGetParams {
     type?: BankStatementType
     from?: string
     to?: string
@@ -17,10 +18,18 @@ export default class BankStatementsClient extends Client<BankStatement> {
         super(options);
     }
 
-    public get(options?: BankStatementsGetRequest) {
+    public get(options?: BankStatementsGetParams) {
         return new Promise<ResponsePage<BankStatement>>(async resolve => {
             const response = await this.httpClient.get('/account/bankstatements', { query: options });
-            resolve(new PageBuilder(this.httpClient, this.cacheLayer).build(response));
+            resolve(new PageBuilder(this.httpClient, this.cacheLayer)
+            .build({
+                res: response,
+                override: (data: any) => ({
+                    ...data,
+                    date: convertDate(data.date),
+                    created_at: convertDate(data.created_at),
+                })
+            }));
         });
     }
 

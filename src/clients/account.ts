@@ -3,6 +3,11 @@ import Withdrawals from "./account/withdrawals";
 import BankStatements from "./account/bankstatements";
 import Documents from "./account/documents";
 import { Account } from "../types";
+import { convertNumber } from "../number_dates";
+
+interface AccountGetParams {
+    decimals?: boolean
+}
 
 export default class AccountClient extends Client<Account> {
 
@@ -18,11 +23,19 @@ export default class AccountClient extends Client<Account> {
         this.documents = new Documents(options);
     }
 
-    public async get() {
+    public async get(options?: AccountGetParams) {
         return new Promise<Account>(async resolve => {
             const response = await this.httpClient.get("/account");
             this.cacheLayer.setDefault(response.results);
-            resolve(response.results);
+            const account: Account = response.results
+
+            const decimals = options?.decimals ?? true;
+            resolve({
+                ...account,
+                balance: convertNumber(account.balance, decimals),
+                cash_to_invest: convertNumber(account.cash_to_invest, decimals),
+                cash_to_withdraw: convertNumber(account.cash_to_withdraw, decimals),
+            });
         });
     }
 

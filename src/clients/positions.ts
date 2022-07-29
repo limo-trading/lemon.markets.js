@@ -3,11 +3,13 @@ import Statements from './positions/statements';
 import Performance from './positions/performance';
 import { PageBuilder } from '../response_page';
 import { Position, ResponsePage } from '../types';
+import { convertNumber } from '../number_dates';
 
-interface PositionsGetRequest {
+interface PositionsGetParams {
     isin?: string
     limit?: number
     page?: number
+    decimals?: boolean
 }
 
 export default class PositionsClient extends Client<Position> {
@@ -22,10 +24,23 @@ export default class PositionsClient extends Client<Position> {
         this.performance = new Performance(options);
     }
 
-    public get(options?:PositionsGetRequest) {
+    public get(options?: PositionsGetParams) {
         return new Promise<ResponsePage<Position>>(async resolve => {
             const response = await this.httpClient.get('/positions', { query: options });
-            resolve(new PageBuilder<Position>(this.httpClient, this.cacheLayer).build(response, 'isin'));
+
+            const decimals = options?.decimals ?? true;
+
+            resolve(new PageBuilder<Position>(this.httpClient, this.cacheLayer)
+                .build({
+                    res: response,
+                    useId: 'isin',
+                    override: (data: any) => ({
+                        ...data,
+                        buy_price_avg: convertNumber(data.buy_price_avg, decimals),
+                        estimated_price_total: convertNumber(data.estimated_price_total, decimals),
+                        estimated_price: convertNumber(data.estimated_price, decimals)
+                    })
+                }))
         })
     }
 
