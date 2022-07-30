@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../client";
 import * as Ably from 'ably';
 import Cache from '../cache';
-import { Quote, RealtimeSubscription } from "../types";
+import { Quote, RealtimeSubscription, RealtimeAuth } from "../types";
 import { convertDate, convertNumber } from "../number_dates";
 
 interface RealtimeSubscribeParams {
@@ -11,15 +11,9 @@ interface RealtimeSubscribeParams {
     decimals?: boolean
 }
 
-interface RealtimeAuthResponse {
-    token: string
-    expires_at: number
-    user_id: string
-}
-
 export default class RealtimeClient extends Client<Quote> {
 
-    private authCache: Cache<RealtimeAuthResponse>;
+    private authCache: Cache<RealtimeAuth>;
     private connectionCache: Cache<Ably.Realtime>;
     private quotesCache: Cache<Ably.Types.RealtimeChannelCallbacks>
     private subscriptionsCache: Cache<Ably.Types.RealtimeChannelCallbacks>
@@ -34,7 +28,7 @@ export default class RealtimeClient extends Client<Quote> {
     }
 
     private auth() {
-        return new Promise<RealtimeAuthResponse>(async resolve => {
+        return new Promise<RealtimeAuth>(async resolve => {
             const response = await this.httpClient.post('/auth');
             this.cacheLayer.set('auth', response);
             resolve(response);

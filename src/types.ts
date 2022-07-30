@@ -167,6 +167,12 @@ export interface RealtimeSubscription {
     close: () => void
 }
 
+export interface RealtimeAuth {
+    token: string
+    expires_at: number
+    user_id: string
+}
+
 export interface ResponsePage<T> {
     page: number
     pages: number
