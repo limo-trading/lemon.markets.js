@@ -118,7 +118,7 @@ export class Realtime {
 
             subscriptions.publish('isins', typeof options.isin === 'string' ? options.isin : options.isin.join(','), err => {
                 if(err) {
-                    if(!options.errorCallback) return console.log(err.message);
+                    if(!options.errorCallback) return process.stdout.write(err.message + '\n');
                     return options.errorCallback?.(err.message);
                 }
             });
