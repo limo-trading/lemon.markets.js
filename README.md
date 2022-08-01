@@ -616,6 +616,7 @@ const trades: Trade[] = page.values
 
 ---
 ## Realtime
+Info: If no data is sent, the exchange may be closed.
 
 ---
 ### RealtimeSubscription
@@ -634,6 +635,21 @@ Subscribe <br/>
 
 ```ts
 const subscription: RealtimeSubscription = await client.realtime.subscribe({
+    isin: 'US0378331005',
+    callback: (data: Quote) => {
+        console.log(data)
+    }
+})
+```
+
+Or to display realtime data without exposing your API key
+
+```ts
+// backend (API key is required)
+const auth - await client.realtime.auth()
+// frontend (API key is not required)
+const realtime = new lemon.Realtime(auth)
+const subscription = realtime.subscribe({
     isin: 'US0378331005',
     callback: (data: Quote) => {
         console.log(data)
