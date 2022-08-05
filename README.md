@@ -9,8 +9,11 @@ This is a Javascript/Typescript SDK for the [lemon.markets](https://lemon.market
 
 ### Node.js Version
 lemon.markets.js is build for `Node.js v17.x`.
+<br/>
 Older versions may be supported, but not tested and some features may not work.
-Known issues:
+<br/>
+<br/>
+Known issues in older versions:
 * Dates in Cache are strings, not Date objects.
 
 ## Getting started
