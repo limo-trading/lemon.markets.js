@@ -1,6 +1,6 @@
 {
   "name": "lemon.markets.js",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "This is a Javascript/Typescript SDK for the lemon.markets API.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
