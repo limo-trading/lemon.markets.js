@@ -24,22 +24,22 @@ export default class BankStatementsClient extends Client<BankStatement> {
             const response = await this.httpClient.get('/account/bankstatements', {
                 query: {
                     ...options,
-                    from: options ? options?.from instanceof Date ? formatDate(options.from): 'beginning' : undefined,
+                    from: options ? options?.from instanceof Date ? formatDate(options.from) : 'beginning' : undefined,
                     to: options?.to ? formatDate(options.to) : undefined,
                 }
             });
-            
+
             const decimals = options?.decimals ?? true;
             resolve(new PageBuilder(this.httpClient, this.cacheLayer)
-            .build({
-                res: response,
-                override: (data: any) => ({
-                    ...data,
-                    date: convertDate(data.date),
-                    created_at: convertDate(data.created_at),
-                    amount: convertNumber(data.amount, decimals),
-                })
-            }));
+                .build({
+                    res: response,
+                    override: (data: any) => ({
+                        ...data,
+                        date: convertDate(data.date),
+                        created_at: convertDate(data.created_at),
+                        amount: convertNumber(data.amount, decimals),
+                    })
+                }));
         });
     }
 

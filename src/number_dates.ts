@@ -11,10 +11,10 @@ export function convertDate(date: string): Date {
 
 export function formatDate(date: Date): string {
     const offset = date.getTimezoneOffset()
-    var d = new Date(date.getTime() - offset * 60 * 1000);
-    var month = '' + (d.getMonth() + 1)
-    var day = '' + d.getDate()
-    var year = d.getFullYear()
+    const d = new Date(date.getTime() - offset * 60 * 1000);
+    let month = '' + (d.getMonth() + 1)
+    let day = '' + d.getDate()
+    const year = d.getFullYear()
 
     if (month.length < 2)
         month = '0' + month;
