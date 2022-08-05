@@ -52,7 +52,15 @@ export default class OHLCClient extends Client<OHLC> {
         })
     }
 
-    public cache() {
-        return this.cacheLayer.getAll()
+    public cache(options?: { decimals?: boolean }) {
+        const decimals = options?.decimals ?? true
+        return this.cacheLayer.getAll().map(data => ({
+            ...data,
+            o: convertNumber(data.o, decimals),
+            h: convertNumber(data.h, decimals),
+            l: convertNumber(data.l, decimals),
+            c: convertNumber(data.c, decimals),
+            pbv: convertNumber(data.pbv, decimals),
+        }))
     }
 }

@@ -51,7 +51,11 @@ export default class WithdrawalsClient extends Client<Withdrawal> {
         });
     }
 
-    public cache() {
-        return this.cacheLayer.getAll();
+    public cache(options?: { decimals?: boolean }) {
+        const decimals = options?.decimals ?? true;
+        return this.cacheLayer.getAll().map(data => ({
+            ...data,
+            amount: convertNumber(data.amount, decimals),
+        }))
     }
 }

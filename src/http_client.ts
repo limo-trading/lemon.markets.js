@@ -53,7 +53,7 @@ export default class HttpClient {
         const body: BodyInit = options?.body ? typeof options.body === 'string' ? options.body : JSON.stringify(options.body) : '';
 
         // construct query string
-        const query: string = options?.query ? `?${Object.keys(options.query).map(key => `${key}=${options.query![key]}`).join('&')}` : '';
+        const query: string = options?.query ? `?${Object.keys(options.query).map(key => options.query![key] ? `${key}=${options.query![key]}` : undefined).join('&')}` : '';    
 
         const res = await fetch(`${url}${query}`, {
             method,
