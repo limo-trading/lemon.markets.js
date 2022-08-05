@@ -1,12 +1,12 @@
 import Client, { ClientOptions } from "../../client";
-import { convertDate, convertNumber } from "../../number_dates";
+import { convertDate, convertNumber, formatDate } from "../../number_dates";
 import { PageBuilder } from "../../response_page";
 import { ResponsePage, Performance } from "../../types";
 
 interface PerformanceGetParams {
     isin?: string
-    from?: string
-    to?: string
+    from?: Date
+    to?: Date
     sorting?: 'asc' | 'desc'
     limit?: number
     page?: number
@@ -21,7 +21,13 @@ export default class PerformanceClient extends Client<Performance> {
 
     public async get(options?: PerformanceGetParams) {
         return new Promise<ResponsePage<Performance>>(async resolve => {
-            const response = await this.httpClient.get('/positions/performance', { query: options });
+            const response = await this.httpClient.get('/positions/performance', {
+                query: {
+                    ...options,
+                    from: options?.from ? formatDate(options.from) : undefined,
+                    to: options?.to ? formatDate(options.to) : undefined,
+                }
+            });
 
             const decimals = options?.decimals ?? true;
 

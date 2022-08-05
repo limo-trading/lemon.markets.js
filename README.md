@@ -94,7 +94,7 @@ main()
 
 ---
 ## Numbers
----
+
 ### Quantities
 If you want to enter a quantity (e.g. when you place an order and want to specify how many stocks you want to buy), you can simply enter the "normal" quantity you want to buy or sell --> "quantity" = 1 will result in you buying 1 stock.
 
@@ -170,6 +170,7 @@ Get
 | - | - | - |
 | limit? | number | This parameter is required to influence the Pagination. Use it to define the limit of displayed results on one page. The default value is 10, the maximum number is 100. |
 | page? | number | This parameter is required to influence the Pagination. Use it to define the specific results page you wish to display. |
+| decimals? | boolean | Specify the numbers format you want to get your response in. Default is true |
 
 ```ts
 const response: ResponsePage<Withdrawal> = await client.account.withdrawals.get()
@@ -189,6 +190,7 @@ Create
 | amount | number | Amount you wish to withdraw.  |
 | pin | number | This is the personal verification PIN you set during the onboarding. |
 | idempotency? | string | You can set your own unique idempotency key to prevent duplicate operations. Subsequent requests with the same idempotency key will then not go through and throw an error message. This means you cannot make the same withdrawal twice. |
+| decimals? | boolean | Specify the numbers format you want to get your response in. Default is true |
 
 ```ts
 const result: boolean = await client.account.withdrawals.create({ amount: 10, pin: 10 })
@@ -214,11 +216,12 @@ Get
 | Name | Type | Description |
 | - | - | - |
 | type? | 'pay_in' \| 'pay_out' \| 'order_buy' \| 'order_sell' \| 'eod_balance' \| 'dividend' \| 'tax_refunded' | Filter for different types of bank statements |
-| from? | string | Filter for bank statements after a specific date |
-| to? | string | Filter for bank statements until a specific date |
+| from? | Date | Filter for bank statements after a specific date |
+| to? | Date | Filter for bank statements until a specific date |
 | sorting? | 'asc' \| 'desc' | Use asc_ to sort your bank statements in ascending order (oldest ones first), or desc to sort your bank statements in descending order (newest ones first). |
 | limit? | number | This parameter is required to influence the Pagination. Use it to define the limit of displayed results on one page. The default value is 10, the maximum number is 100. |
 | page? | number | This parameter is required to influence the Pagination. Use it to define the specific results page you wish to display. |
+| decimals? | boolean | Specify the numbers format you want to get your response in. Default is true |
 
 ```ts
 const page: ResponsePage<BankStatement> = await client.account.bankstatements.get()
@@ -281,11 +284,13 @@ Get <br/>
 <b>Params</b>
 | Name | Type | Description |
 | - | - | - |
-| from? | string | Specify a Date to get only orders from a specific date on |
-| to? | string | Specify a Date to get only orders until a specific date |
+| from? | Date | Specify a Date to get only orders from a specific date on |
+| to? | Date | Specify a Date to get only orders until a specific date |
 | isin? | string | Use this to only see orders from a specific instrument |
 | side? | 'buy' \| 'sell' | Filter to either only see "buy" or "sell" orders |
 | status? | 'inactive' \| 'active' \| 'open' \| 'in_progress' \| 'canceling' \| 'executed' \| 'canceled' \| 'expired' | Filter for status|
+| stop_price? | number | Use this attribute to define a Stop Price for your Order |
+| limit_price? | number | Use this attribute to define a Limit Price for your Order |
 | decimals? | boolean | Specify the numbers format you want to get your response in. Default is true |
 
 ```ts
@@ -451,8 +456,8 @@ Get <br/>
 | Name | Type | Description |
 | - | - | - |
 | isin? | string | Filter for a specific instrument in your positions |
-| from? | string | Specify an ISO date string (YYYY-MM-DD) to get position performances from a specific date on. If "from" is not specified, the API returns the last 30 days by default |
-| to? | string | Specify an ISO date string (YYYY-MM-DD) to get position performances until specific date on |
+| from? | Date | Get position performances from a specific date on. If "from" is not specified, the API returns the last 30 days by default |
+| to? | Date | Get position performances until specific date on |
 | sorting? | 'asc' \| 'desc' | Use "asc" to sort your position performances in ascending order and "desc" to sort your position performances in descending order |
 | limit? | number | Required for Pagination. Limit of displayed results on one page |
 | page? | number | Required for Pagination. Results page you wish to display |

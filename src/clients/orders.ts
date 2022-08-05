@@ -2,7 +2,7 @@ import HttpClient from "../http_client";
 import Client, { ClientOptions } from "../client";
 import { PageBuilder } from "../response_page";
 import { Order, OrderConfirmation, OrderStatus, ResponsePage } from "../types";
-import { convertDate, convertNumber } from "../number_dates";
+import { convertDate, convertNumber, formatDate } from "../number_dates";
 
 interface ActivateParams {
     pin: number
@@ -14,6 +14,8 @@ interface OrderCreateParams {
     expires_at?: 'day' | Date
     side: 'buy' | 'sell'
     venue: string
+    stop_price?: number
+    limit_price?: number
     decimals?: boolean
 }
 
@@ -23,8 +25,8 @@ interface OderGetOneParams {
 }
 
 interface OrderGetParams {
-    from?: string
-    to?: string
+    from?: Date
+    to?: Date
     isin?: string
     side?: 'buy' | 'sell'
     status?: OrderStatus
@@ -48,10 +50,12 @@ export default class OrdersClient extends Client<Order> {
 
     public async create(options: OrderCreateParams) {
         return new Promise<OrderConfirmation>(async resolve => {
+            const decimals = options.decimals ?? true;
+            options.limit_price = convertNumber(options.limit_price!, decimals);
+            options.stop_price = convertNumber(options.stop_price!, decimals);
+
             const expiresAt = options.expires_at instanceof Date ? options.expires_at.toISOString() : 'p1d';
             const response = await this.httpClient.post('/orders', { body: { ...options, expiresAt } })
-
-            const decimals = options.decimals ?? true;
 
             resolve({
                 ...response.results,
@@ -60,6 +64,8 @@ export default class OrdersClient extends Client<Order> {
                 stop_price: convertNumber(response.results.stop_price, decimals),
                 limit_price: convertNumber(response.results.limit_price, decimals),
                 estimated_price: convertNumber(response.results.estimated_price, decimals),
+                estimated_price_total: convertNumber(response.results.estimated_price_total, decimals),
+                charge: convertNumber(response.results.charge, decimals),
                 activate: activateOptions => activateFunction(activateOptions, response.results.id, this.httpClient),
             });
         })
@@ -88,7 +94,13 @@ export default class OrdersClient extends Client<Order> {
 
     public get(options?: OrderGetParams) {
         return new Promise<ResponsePage<Order>>(async resolve => {
-            const response = await this.httpClient.get('/orders', { query: options })
+            const response = await this.httpClient.get('/orders', {
+                query: {
+                    ...options,
+                    from: options?.from ? formatDate(options?.from) : undefined,
+                    to: options?.to ? formatDate(options?.to) : undefined,
+                }
+            })
 
             const decimals = options?.decimals ?? true;
             resolve(new PageBuilder(this.httpClient, this.cacheLayer)

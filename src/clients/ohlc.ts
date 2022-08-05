@@ -1,5 +1,5 @@
 import Client, { ClientOptions } from "../client"
-import { convertDate, convertNumber } from "../number_dates"
+import { convertDate, convertNumber, formatDate } from "../number_dates"
 import { PageBuilder } from "../response_page"
 import { OHLC, ResponsePage } from "../types"
 
@@ -9,8 +9,8 @@ interface OHLCGetParams {
     x1: DataType
     isin: string | string[]
     mic?: string
-    from?: string
-    to?: string
+    from?: Date
+    to?: Date
     decimals?: boolean
 }
 
@@ -27,7 +27,13 @@ export default class OHLCClient extends Client<OHLC> {
             const decimals = options.decimals ?? true
             options.decimals = false
 
-            const response = await this.httpClient.get(`/ohlc/${options.x1}`, { query: options })
+            const response = await this.httpClient.get(`/ohlc/${options.x1}`, {
+                query: {
+                    ...options,
+                    from: options.from ? options.from.toISOString() : undefined,
+                    to: options.to ? options.to.toISOString() : undefined,
+                }
+            })
 
             resolve(new PageBuilder<OHLC>(this.httpClient, this.cacheLayer)
                 .build({
