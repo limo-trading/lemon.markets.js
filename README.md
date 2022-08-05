@@ -217,8 +217,7 @@ Get
 | from? | string | Filter for bank statements after a specific date |
 | to? | string | Filter for bank statements until a specific date |
 | sorting? | 'asc' \| 'desc' | Use asc_ to sort your bank statements in ascending order (oldest ones first), or desc to sort your bank statements in descending order (newest ones first). |
-| limit? | number | This parameter is required to influence the Pagination. Use it to define the limit of displayed results on one page.
-The default value is 10, the maximum number is 100. |
+| limit? | number | This parameter is required to influence the Pagination. Use it to define the limit of displayed results on one page. The default value is 10, the maximum number is 100. |
 | page? | number | This parameter is required to influence the Pagination. Use it to define the specific results page you wish to display. |
 
 ```ts
@@ -349,7 +348,7 @@ const confirmation: OrderConfirmation = await client.orders.create({
 | stop_price | number | This is the Stop price for the order. "null" if not specified.  |
 | limit_price | number | This is the Limit price for the order. "null" if not specified.  |
 | venue | string | This is the Market Identifier Code of the trading venue the order was placed at (default is XMUN) |
-| estimated_price | number | This is an estimation from our end for what price the order will be executed.  |
+| estimated_price | number | This is an estimation from the lemon.markets end for what price the order will be executed.  |
 | charge | number | This is the charge for the placed order.  |
 | activate | (options: { pin: number }) => Promise\<boolean\> | If you want to activate a paper money order or are interested in building your own 2FA experience you can use this function | 
 
@@ -357,8 +356,7 @@ Activate order <br/>
 <b>Params</b>
 | Name | Type | Description |
 | - | - | - |
-| pin | number | You need to set a PIN in the request body to activate an order. If you want to activate a real money order, use the 4-digit PIN you set during your onboarding process.
-If you want to activate a paper money order you can use any random 4-digit PIN or send the request without request body. |
+| pin | number | You need to set a PIN in the request body to activate an order. If you want to activate a real money order, use the 4-digit PIN you set during your onboarding process. If you want to activate a paper money order you can use any random 4-digit PIN or send the request without request body. |
 
 ```ts
 let confirmation: OrderConfirmation;
@@ -383,8 +381,7 @@ Get <br/>
 | Name | Type | Description |
 | - | - | - |
 | isin? | string | Use this parameter to filter for a specific Instrument in your positions using the instrument's ISIN |
-| limit? | number | This parameter is required to influence the Pagination. Use it to define the limit of displayed results on one page.
-The default value is 10, the maximum number is 100 |
+| limit? | number | This parameter is required to influence the Pagination. Use it to define the limit of displayed results on one page. The default value is 10, the maximum number is 100 |
 | page? | number | This parameter is required to influence the Pagination. Use it to define the specific results page you wish to display |
 | decimals? | boolean | Specify the numbers format you want to get your response in. Default is true |
 
@@ -406,13 +403,13 @@ const positions: Position[] = client.positions.cache()
 | - | - | - |
 | id | string | This is the unique Identification Number for the statement |
 | order_id | string | This is the unique Identification Number for the related order (if type = order_buy or order_sell, otherwise null) |
-| external_id | string | If you imported a position from an external source, we provide the external identification number here |
+| external_id | string | If you imported a position from an external source, lemon.markets provides the external identification number here |
 | type | 'order_buy' \| 'order_sell' \| 'split' \| 'import' \| 'snx' | This is the type of statement that tells you about the type of change that happened to your position |
 | quantity | number | This is the quantity related to the position statement |
 | isin | string | This is the ISIN of the Instrument that is affected in the statement |
 | isin_title | string | This is the Title of the Instrument that is affected in the statement |
 | date | Date | This is the Date the statement occurs at |
-| created_at | Date | Date for when the statement is processed by us internally. It can be the case that we receive data 1-3 days later. So, for example when a position change occurs on a Friday afternoon, we only receive the data on Monday morning. Therefore, date would then be date of the Friday, while created_at is a date from Monday morning. |
+| created_at | Date | Date for when the statement is processed by us internally. It can be the case that lemon.markets receives data 1-3 days later. So, for example when a position change occurs on a Friday afternoon, lemon.markets only receives the data on Monday morning. Therefore, date would then be date of the Friday, while created_at is a date from Monday morning. |
 
 Get <br/>
 <b>Params</b>
@@ -491,8 +488,8 @@ Get <br/>
 <b>Params</b>
 | Name | Type | Description |
 | - | - | - |
-| isin? | string \| string[] | Use this query parameter to specify the Instrument you are interested in through its International Securities Identification Number. You can also specify multiple ISINs |
-| type? | 'stock' \| 'etf' \| string | Use this query parameter to specify the type of instrument you want to filter for. Not all types are mentioned in the lemon.markets docs |
+| isin? | string \| string[] | Use this parameter to specify the Instrument you are interested in through its International Securities Identification Number. You can also specify multiple ISINs |
+| type? | 'stock' \| 'etf' \| string | Use this parameter to specify the type of instrument you want to filter for. Not all types are mentioned in the lemon.markets docs |
 
 ```ts
 const page: ResponsePage<Instrument> = await client.instruments.get()
@@ -592,15 +589,8 @@ Get <br/>
 | x1 | 'm1' \| 'h1' \| 'd1' | Specify the type of data you wish to retrieve: m1 (per minute), h1 (per hour), or d1 (per day) |
 | isin | string \| string[] | Use the International Securities Identification Number (ISIN) to filter for the instrument you want to get the OHLC data for |
 | mic? | string | Use the Market Identifier Code to filter for a specific Trading Venue |
-| from? | string | Start of time range you want to get OHLC data for.
-
-For D1 data, you can request 60 days of data with one request, therefore the time range between from and to cannot be longer than 60 days. If to is not defined, the API automatically returns data until the current day or up to 60 days, based on the from date.
-
-For H1 and M1 data, you can request historical data for one day, therefore the time range between from and to cannot be longer than 1 day |
-| to? | string | End of time range you want to get OHLC data for.
-For D1 data, you can request 60 days of data with one request, therefore the time range between from and to cannot be longer than 60 days. If to is not defined, the API automatically returns data until the current day or up to 60 days, based on the from date.
-
-For H1 and M1 data, you can request historical data for one day, therefore the time range between from and to cannot be longer than 1 day. |
+| from? | string | Start of time range you want to get OHLC data for. For D1 data, you can request 60 days of data with one request, therefore the time range between from and to cannot be longer than 60 days. If to is not defined, the API automatically returns data until the current day or up to 60 days, based on the from date. For H1 and M1 data, you can request historical data for one day, therefore the time range between from and to cannot be longer than 1 day |
+| to? | string | End of time range you want to get OHLC data for. For D1 data, you can request 60 days of data with one request, therefore the time range between from and to cannot be longer than 60 days. If to is not defined, the API automatically returns data until the current day or up to 60 days, based on the from date. For H1 and M1 data, you can request historical data for one day, therefore the time range between from and to cannot be longer than 1 day. |
 | decimals? | boolean | Specify the numbers format you want to get your response in. Default is true |
 
 ```ts
