@@ -1,5 +1,5 @@
 import client from './client'
-import { Document } from '../src/types'
+import { Document } from '../src/index'
 
 describe('test documents route', () => {
 

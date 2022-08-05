@@ -1,4 +1,4 @@
-import { Statement } from '../src/types';
+import { Statement } from '../src/index';
 import client from './client';
 
 describe('test statements route', () => {

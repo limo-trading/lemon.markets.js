@@ -2,7 +2,7 @@ import Client, { ClientOptions } from '../client';
 import Statements from './positions/statements';
 import Performance from './positions/performance';
 import { PageBuilder } from '../response_page';
-import { Position, ResponsePage } from '../types';
+import { Position, ResponsePage } from '../index';
 import { convertNumber } from '../number_dates';
 
 interface PositionsGetParams {

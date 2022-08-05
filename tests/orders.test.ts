@@ -1,4 +1,4 @@
-import { Order, OrderConfirmation } from '../src/types';
+import { Order, OrderConfirmation } from '../src/index';
 import client from './client';
 
 describe('test orders route', () => {
@@ -41,7 +41,9 @@ describe('test orders route', () => {
 
     it('should get order', async () => {
 
-        const res = await client.orders.getOne(order.id)
+        const res = await client.orders.getOne({
+            id: order.id
+        })
 
         expect(res).toHaveProperty('id')
         expect(res).toHaveProperty('isin')

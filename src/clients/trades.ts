@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../client";
 import { convertNumber } from "../number_dates";
 import { PageBuilder } from "../response_page";
-import { Trade, ResponsePage } from "../types";
+import { Trade, ResponsePage } from "../index";
 
 interface TradesGetParams {
     isin: string | string[]

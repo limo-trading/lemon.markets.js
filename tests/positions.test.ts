@@ -1,4 +1,4 @@
-import { Position } from "../src/types";
+import { Position } from "../src/index";
 import client from "./client";
 
 describe("test positions route", () => {

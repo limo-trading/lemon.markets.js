@@ -1,4 +1,4 @@
-import { Venue } from "../src/types";
+import { Venue } from "../src/index";
 import client from "./client";
 
 describe("test venues route", () => {

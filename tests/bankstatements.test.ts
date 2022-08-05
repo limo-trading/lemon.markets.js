@@ -1,4 +1,4 @@
-import { BankStatement } from '../src/types';
+import { BankStatement } from '../src/index';
 import client from './client';
 
 describe('test bankstatements route', () => {

@@ -1,4 +1,4 @@
-import { Withdrawal } from "../src/types";
+import { Withdrawal } from "../src/index";
 import client from "./client";
 
 describe('test withdrawals route', () => {

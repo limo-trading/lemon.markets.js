@@ -1,4 +1,4 @@
-import { Instrument } from "../src/types";
+import { Instrument } from "../src/index";
 import client from "./client";
 
 describe("test instruments route", () => {

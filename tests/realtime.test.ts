@@ -1,4 +1,4 @@
-import { RealtimeSubscription } from "../src/types";
+import { RealtimeSubscription } from "../src/index";
 import client from "./client";
 
 describe("test realtime", () => {

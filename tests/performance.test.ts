@@ -1,5 +1,5 @@
 import client from "./client";
-import { Performance } from "../src/types";
+import { Performance } from "../src/index";
 
 describe("test performance route", () => {
 
