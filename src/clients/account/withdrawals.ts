@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../../client";
 import { convertDate, convertNumber } from "../../number_dates";
 import { PageBuilder } from "../../response_page";
-import { Withdrawal, ResponsePage } from "../../types";
+import { Withdrawal, ResponsePage } from "../../index";
 
 interface WithdrawalsCreateParams {
     amount: number

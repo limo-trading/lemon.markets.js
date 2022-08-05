@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../client";
 import { convertDate, convertNumber } from "../number_dates";
 import { PageBuilder } from "../response_page";
-import { Quote, ResponsePage } from "../types";
+import { Quote, ResponsePage } from "../index";
 
 interface QuoteGetParams {
     isin: string | string[]

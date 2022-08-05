@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../../client";
 import { convertDate, convertNumber, formatDate } from "../../number_dates";
 import { PageBuilder } from "../../response_page";
-import { BankStatement, BankStatementType, ResponsePage } from "../../types";
+import { BankStatement, BankStatementType, ResponsePage } from "../../index";
 
 interface BankStatementsGetParams {
     type?: BankStatementType

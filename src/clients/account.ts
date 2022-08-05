@@ -2,7 +2,7 @@ import Client, { ClientOptions } from "../client";
 import Withdrawals from "./account/withdrawals";
 import BankStatements from "./account/bankstatements";
 import Documents from "./account/documents";
-import { Account } from "../types";
+import { Account } from "../index";
 import { convertNumber } from "../number_dates";
 
 interface AccountGetParams {

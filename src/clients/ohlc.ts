@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../client"
 import { convertDate, convertNumber, formatDate } from "../number_dates"
 import { PageBuilder } from "../response_page"
-import { OHLC, ResponsePage } from "../types"
+import { OHLC, ResponsePage } from "../index"
 
 type DataType = 'm1' | 'h1' | 'd1'
 

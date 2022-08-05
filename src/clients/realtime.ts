@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../client";
 import * as Ably from 'ably';
 import Cache from '../cache';
-import { Quote, RealtimeSubscription, RealtimeAuth } from "../types";
+import { Quote, RealtimeSubscription, RealtimeAuth } from "../index";
 import { convertDate, convertNumber } from "../number_dates";
 
 interface RealtimeSubscribeParams {

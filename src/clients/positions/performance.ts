@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../../client";
 import { convertDate, convertNumber, formatDate } from "../../number_dates";
 import { PageBuilder } from "../../response_page";
-import { ResponsePage, Performance } from "../../types";
+import { ResponsePage, Performance } from "../../index";
 
 interface PerformanceGetParams {
     isin?: string

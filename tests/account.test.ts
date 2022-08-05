@@ -1,4 +1,4 @@
-import { Account } from '../src/types/account';
+import { Account } from '../src/index';
 import client from './client'
 
 describe('test account route', () => {

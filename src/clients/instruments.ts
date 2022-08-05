@@ -1,6 +1,6 @@
 import Client, { ClientOptions } from "../client";
 import { PageBuilder } from "../response_page";
-import { Instrument, InstrumentType, ResponsePage } from "../types";
+import { Instrument, InstrumentType, ResponsePage } from "../index";
 
 interface InstrumentsSearchParams {
     query: string;

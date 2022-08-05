@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../../client";
 import { convertDate } from "../../number_dates";
 import { PageBuilder } from "../../response_page";
-import { Document, ResponsePage } from "../../types";
+import { Document, ResponsePage } from "../../index";
 
 export default class DocumentsClient extends Client<Document> {
 

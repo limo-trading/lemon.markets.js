@@ -1,7 +1,7 @@
 import HttpClient from "../http_client";
 import Client, { ClientOptions } from "../client";
 import { PageBuilder } from "../response_page";
-import { Order, OrderConfirmation, OrderStatus, ResponsePage } from "../types";
+import { Order, OrderConfirmation, OrderStatus, ResponsePage } from "../index";
 import { convertDate, convertNumber, formatDate } from "../number_dates";
 
 interface ActivateParams {

@@ -1,4 +1,4 @@
-import { OHLC } from "../src/types";
+import { OHLC } from "../src/index";
 import client from "./client";
 
 describe("test ohlc route", () => {

@@ -1,6 +1,6 @@
 import HttpClient from "./http_client"
 import Cache from "./cache"
-import { Quote, ResponsePage } from "./types";
+import { Quote, ResponsePage } from "./index";
 
 export class PageBuilder<T> {
 

@@ -1,7 +1,7 @@
 import Client, { ClientOptions } from "../../client";
 import { convertDate } from "../../number_dates";
 import { PageBuilder } from "../../response_page";
-import { ResponsePage, Statement, StatementType } from "../../types";
+import { ResponsePage, Statement, StatementType } from "../../index";
 
 interface StatementGetParams {
     type?: StatementType
