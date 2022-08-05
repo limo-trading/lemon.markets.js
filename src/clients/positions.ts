@@ -44,7 +44,13 @@ export default class PositionsClient extends Client<Position> {
         })
     }
 
-    public cache() {
-        return this.cacheLayer.getAll();
+    public cache(options?: { decimals?: boolean }) {
+        const decimals = options?.decimals ?? true;
+        return this.cacheLayer.getAll().map(data => ({
+            ...data,
+            buy_price_avg: convertNumber(data.buy_price_avg, decimals),
+            estimated_price_total: convertNumber(data.estimated_price_total, decimals),
+            estimated_price: convertNumber(data.estimated_price, decimals)
+        }));
     }
 }

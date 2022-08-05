@@ -47,7 +47,13 @@ export default class PerformanceClient extends Client<Performance> {
         });
     }
 
-    public cache() {
-        return this.cacheLayer.getAll();
+    public cache(options?: { decimals?: boolean }) {
+        const decimals = options?.decimals ?? true;
+        return this.cacheLayer.getAll().map(data=> ({
+            ...data,
+            profit: convertNumber(data.profit, decimals),
+            loss: convertNumber(data.loss, decimals),
+            fees: convertNumber(data.fees, decimals),
+        }))
     }
 }

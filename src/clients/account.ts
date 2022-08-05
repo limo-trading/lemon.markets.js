@@ -39,7 +39,14 @@ export default class AccountClient extends Client<Account> {
         });
     }
 
-    public cache() {
-        return this.cacheLayer.getDefault();
+    public cache(options?: { decimals?: boolean }) {
+        const decimals = options?.decimals ?? true;
+        const cache = this.cacheLayer.getDefault()
+        return {
+            ...cache,
+            balance: convertNumber(cache.balance, decimals),
+            cash_to_invest: convertNumber(cache.cash_to_invest, decimals),
+            cash_to_withdraw: convertNumber(cache.cash_to_withdraw, decimals),
+        }
     }
 }

@@ -127,7 +127,14 @@ export default class OrdersClient extends Client<Order> {
         })
     }
 
-    public cache() {
-        return this.cacheLayer.getAll();
+    public cache(options?: { decimals?: boolean }) {
+        const decimals = options?.decimals ?? true;
+        return this.cacheLayer.getAll().map(data => ({
+            ...data,
+            stop_price: convertNumber(data.stop_price, decimals),
+            limit_price: convertNumber(data.limit_price, decimals),
+            estimated_price: convertNumber(data.estimated_price, decimals),
+            estimated_price_total: convertNumber(data.estimated_price_total, decimals),
+        }))
     }
 }
