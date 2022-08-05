@@ -91,7 +91,7 @@ main()
 
 ---
 ## ResponsePage
-If you request too much data, your answer will be split into multiple pages.
+If you request too much data, your response will be split into multiple pages.
 
 | Name | Type | Description |
 | - | - | - |
