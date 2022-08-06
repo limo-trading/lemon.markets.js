@@ -21,9 +21,9 @@ export class PageBuilder<T> {
         // cache
         if (this.cacheLayer) {
             // get current node version
-            const version = parseInt(process.version.split('.')[0].substring(1))
+            const version = parseInt(process.version.split('.')[0].substring(1), 10)
             if(version < 17) {
-                console.warn('\x1b[33m[lemon.markets.js] Node.js versions below v17 are deprecated. Some functions are not supported. Consider upgrading.\x1b[0m')
+                process.stdout.write('\x1b[33m[lemon.markets.js] Node.js versions below v17 are deprecated. Some functions are not supported. Consider upgrading.\x1b[0m')
             }
             // copy values. if node version is >= 16, use structuredClone
             const valuesCopy = version >= 17 ? structuredClone(values) : JSON.parse(JSON.stringify(values))
